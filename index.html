@@ -1,3 +1,829 @@
-<html>
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JAKUB STRYBULEWICZ — KANDYDAT NA PRZEWODNICZĄCEGO SU</title>
   
+  <!-- Fonty Google -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800;900&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #07070a;
+      --card-bg: #111118;
+      --accent-green: #00ff66;
+      --accent-pink: #ff0055;
+      --accent-yellow: #ffee00;
+      --accent-cyan: #00f0ff;
+      --text: #ffffff;
+      --text-dim: #a0a0b0;
+      --border: #222230;
+      --radius: 20px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+
+    /* Ticker Banner */
+    .ticker-wrap {
+      width: 100%;
+      background: var(--accent-green);
+      color: #000;
+      font-weight: 900;
+      font-size: 0.9rem;
+      padding: 12px 0;
+      white-space: nowrap;
+      overflow: hidden;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 20px rgba(0, 255, 102, 0.4);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .ticker {
+      display: inline-block;
+      animation: ticker 25s linear infinite;
+    }
+
+    @keyframes ticker {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* Navbar */
+    header {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .logos-container {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .logo-zdz {
+      height: 55px;
+      background-color: #ffffff;
+      padding: 5px 15px;
+      border-radius: 12px;
+      object-fit: contain;
+      box-shadow: 4px 4px 0px var(--accent-pink);
+      border: 2px solid var(--accent-pink);
+    }
+
+    .custom-logo img {
+      height: 55px;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+
+    .vote-date-badge {
+      background: rgba(255, 238, 0, 0.1);
+      border: 2px solid var(--accent-yellow);
+      color: var(--accent-yellow);
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-weight: 800;
+      text-transform: uppercase;
+      text-align: center;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    /* Hero Section */
+    .hero {
+      max-width: 1300px;
+      margin: 40px auto;
+      padding: 0 30px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 50px;
+      align-items: center;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      background: var(--accent-pink);
+      color: #fff;
+      font-weight: 800;
+      padding: 6px 16px;
+      border-radius: 8px;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      margin-bottom: 20px;
+      transform: rotate(-2deg);
+    }
+
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 5.5rem);
+      line-height: 0.95;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 25px;
+      background: linear-gradient(to right, #fff, var(--text-dim));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--accent-green), var(--accent-cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: block;
+    }
+
+    .hero p.subtitle {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: var(--text-dim);
+      margin-bottom: 35px;
+      max-width: 600px;
+    }
+
+    .countdown-box {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 20px;
+      border-radius: var(--radius);
+      display: inline-flex;
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+
+    .countdown-item {
+      text-align: center;
+    }
+
+    .countdown-number {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      font-weight: 800;
+      color: var(--accent-cyan);
+    }
+
+    .countdown-label {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+    }
+
+    /* Candidate Image Card */
+    .hero-gallery {
+      position: relative;
+    }
+
+    .main-photo-card {
+      position: relative;
+      background: var(--card-bg);
+      border: 3px solid var(--accent-green);
+      border-radius: 30px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 10px 10px 0px var(--accent-green);
+      transition: transform 0.3s ease;
+    }
+
+    .main-photo-card:hover {
+      transform: translateY(-5px) rotate(1deg);
+    }
+
+    .main-photo-card img {
+      width: 100%;
+      height: clamp(350px, 50vh, 520px);
+      object-fit: cover;
+      display: block;
+    }
+
+    .photo-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(7, 7, 10, 0.95), transparent);
+      padding: 30px;
+    }
+
+    .mode-switch-btn {
+      background: var(--accent-yellow);
+      color: #000;
+      border: none;
+      padding: 10px 20px;
+      font-weight: 800;
+      border-radius: 12px;
+      cursor: pointer;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      margin-top: 10px;
+      transition: all 0.2s;
+      width: 100%;
+    }
+
+    .mode-switch-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px var(--accent-yellow);
+    }
+
+    /* Program Section */
+    .section-title {
+      max-width: 1300px;
+      margin: 80px auto 40px;
+      padding: 0 30px;
+      text-align: center;
+    }
+
+    .section-title h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 5vw, 4rem);
+      text-transform: uppercase;
+    }
+
+    .section-title p {
+      color: var(--accent-green);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: clamp(0.8rem, 2vw, 1rem);
+    }
+
+    .program-grid {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 30px 80px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .program-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 30px;
+      position: relative;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+
+    .program-card:hover {
+      border-color: var(--accent-green);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 255, 102, 0.15);
+    }
+
+    .card-number {
+      font-family: 'Syne', sans-serif;
+      font-size: 3.5rem;
+      font-weight: 900;
+      color: rgba(255, 255, 255, 0.05);
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      line-height: 1;
+    }
+
+    .card-badge {
+      display: inline-block;
+      align-self: flex-start;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .badge-absurd { background: rgba(255, 0, 85, 0.15); color: var(--accent-pink); border: 1px solid var(--accent-pink); }
+    .badge-hype { background: rgba(0, 255, 102, 0.15); color: var(--accent-green); border: 1px solid var(--accent-green); }
+    .badge-chill { background: rgba(0, 240, 255, 0.15); color: var(--accent-cyan); border: 1px solid var(--accent-cyan); }
+
+    .program-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 12px;
+      font-weight: 800;
+      position: relative;
+      z-index: 2;
+    }
+
+    .program-card p {
+      color: var(--text-dim);
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .power-bar {
+      width: 100%;
+      height: 6px;
+      background: #222;
+      border-radius: 3px;
+      overflow: hidden;
+      margin-top: auto;
+    }
+
+    .power-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-green), var(--accent-cyan));
+      border-radius: 3px;
+    }
+
+    /* Photo Wall Section */
+    .photo-wall {
+      max-width: 1300px;
+      margin: 0 auto 100px;
+      padding: 0 30px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .gallery-item {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      height: clamp(250px, 40vw, 350px);
+      border: 2px solid var(--border);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.1);
+    }
+
+    .gallery-tag {
+      position: absolute;
+      bottom: 15px;
+      left: 15px;
+      right: 15px;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      padding: 8px 15px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      text-align: center;
+    }
+
+    /* Interactive Vote Box */
+    .vote-cta {
+      max-width: 1000px;
+      margin: 0 auto 100px;
+      background: linear-gradient(135deg, #111122, #1b002b);
+      border: 3px solid var(--accent-pink);
+      border-radius: 30px;
+      padding: clamp(30px, 6vw, 60px) 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 50px rgba(255, 0, 85, 0.3);
+      width: calc(100% - 40px);
+    }
+
+    .vote-cta h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      margin-bottom: 20px;
+    }
+
+    .big-vote-btn {
+      background: var(--accent-green);
+      color: #000;
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.2rem, 3vw, 1.5rem);
+      font-weight: 800;
+      padding: 20px 40px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(0, 255, 102, 0.5);
+      transition: all 0.2s;
+      text-transform: uppercase;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .big-vote-btn:hover {
+      transform: scale(1.05) rotate(-1deg);
+      background: #00ff88;
+    }
+
+    .counter-display {
+      margin-top: 25px;
+      font-size: 1.2rem;
+      color: var(--text-dim);
+    }
+
+    .counter-display span {
+      color: var(--accent-yellow);
+      font-weight: 800;
+      font-size: 1.5rem;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      background: #040406;
+      padding: 40px 30px;
+      text-align: center;
+    }
+
+    .footer-content {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .footer-logos {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .copyright {
+      color: var(--text-dim);
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .author-badge {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      color: var(--accent-cyan);
+      font-weight: 700;
+    }
+
+    /* RWD - OPTYMALIZACJA MOBILNA I TABLETOWA */
+    @media (max-width: 1024px) {
+      .hero {
+        gap: 30px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+      }
+      .logos-container {
+        justify-content: center;
+      }
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding: 0 20px;
+      }
+      .hero-tag {
+        margin: 0 auto 20px;
+      }
+      .countdown-box {
+        justify-content: center;
+        width: 100%;
+        flex-wrap: wrap;
+      }
+      .main-photo-card {
+        max-width: 500px;
+        margin: 0 auto;
+      }
+      .program-grid {
+        padding: 0 20px 60px;
+      }
+      .photo-wall {
+        padding: 0 20px;
+      }
+      .vote-cta {
+        width: calc(100% - 40px);
+        margin: 0 auto 60px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .ticker-wrap {
+        font-size: 0.75rem;
+      }
+      .logos-container {
+        flex-direction: column;
+        gap: 15px;
+      }
+      .countdown-box {
+        flex-direction: column;
+        gap: 15px;
+      }
+      .countdown-item {
+        padding: 10px 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .countdown-item:last-child {
+        border-bottom: none;
+      }
+      .program-card {
+        padding: 20px;
+      }
+      .card-number {
+        font-size: 2.8rem;
+      }
+      .big-vote-btn {
+        padding: 15px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Pasek przewijający -->
+  <div class="ticker-wrap">
+    <div class="ticker">
+      ⚡ JAKUB STRYBULEWICZ ★ WYBORY SU 2026/2027 ★ GŁOSOWANIE: 8 PAŹDZIERNIKA ★ KLIMATYZACJA W KLASACH ★ OBIADY (JAK SIĘ UDA) ★ ROAST DAY ★ ROZWALMY SYSTEM RAZEM! ★ ⚡ JAKUB STRYBULEWICZ ★ WYBORY SU 2026/2027 ★ GŁOSOWANIE: 8 PAŹDZIERNIKA ★
+    </div>
+  </div>
+
+  <!-- Header z logotypami -->
+  <header>
+    <div class="logos-container">
+      <!-- ORYGINALNE LOGO ZDZ Z WIKIPEDII -->
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Zwi%C4%85zek_Zak%C5%82ad%C3%B3w_Doskonalenia_Zawodowego_logo.svg/512px-Zwi%C4%85zek_Zak%C5%82ad%C3%B3w_Doskonalenia_Zawodowego_logo.svg.png" alt="Związek Zakładów Doskonalenia Zawodowego Logo" class="logo-zdz">
+      <div class="custom-logo">
+        <img src="1000016717.png" alt="MATE STUDIO AUDIO & VIDEO">
+      </div>
+    </div>
+    <div class="vote-date-badge">
+      🔥 Głosowanie: 8 Października
+    </div>
+  </header>
+
+  <!-- Główna sekcja Hero -->
+  <section class="hero">
+    <div class="hero-text">
+      <span class="hero-tag">Kandydat Nowej Ery SU</span>
+      <h1>Jakub <span>Strybulewicz</span></h1>
+      <p class="subtitle">
+        Zero pustych słów, maksymalny poziom energii. Tworzymy szkołę, w której chce się przebywać.
+      </p>
+
+      <div class="countdown-box">
+        <div class="countdown-item">
+          <div class="countdown-number" id="days">08</div>
+          <div class="countdown-label">Dni do wyborów</div>
+        </div>
+        <div class="countdown-item">
+          <div class="countdown-number">100%</div>
+          <div class="countdown-label">Zaangażowania</div>
+        </div>
+        <div class="countdown-item">
+          <div class="countdown-number">13</div>
+          <div class="countdown-label">Potężnych obietnic</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-gallery">
+      <div class="main-photo-card">
+        <img id="candidateImage" src="1000016180.arw" alt="Jakub Strybulewicz">
+        <div class="photo-overlay">
+          <h3>JAKUB STRYBULEWICZ</h3>
+          <p style="color: var(--accent-green); font-size: 0.85rem; font-weight: 700;">FORM: STANDARD HYPER-MODE</p>
+          <button class="mode-switch-btn" onclick="toggleMemeMode()">⚡ Zmień Tryb Zdęcia</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sekcja Programu Wyborczego -->
+  <section class="section-title">
+    <p>Główny Manifest</p>
+    <h2>Program Wyborczy 2026/2027</h2>
+  </section>
+
+  <div class="program-grid">
+
+    <div class="program-card">
+      <span class="card-number">01</span>
+      <span class="card-badge badge-chill">Demokracja</span>
+      <h3>Cykliczne ankiety dla uczniów</h3>
+      <p>Twoje zdanie ma realne znaczenie. Regularne ankiety online dotyczące decyzji w szkole.</p>
+      <div class="power-bar"><div class="power-fill" style="width: 85%;"></div></div>
+    </div>
+
+    <div class="program-card">
+      <span class="card-number">02</span>
+      <span class="card-badge badge-hype">Viral</span>
+      <h3>Szkolny eksperyment social media</h3>
+      <p>Wprowadzamy naszą szkołę w algorytmy TikToka i Instagrama. Zróbmy z tego legendarne konto!</p>
+      <div class="power-bar"><div class="power-fill" style="width: 95%;"></div></div>
+    </div>
+
+    <div class="program-card">
+      <span class="card-number">03</span>
+      <span class="card-badge badge-absurd">Extreme</span>
+      <h3>Szkolny runmagedon</h3>
+      <p>Tor przeszkód na korytarzach i klatkach schodowych. Bieg po opaskę mistrza szkoły.</p>
+      <div class="power-bar"><div class="power-fill" style="width: 90%;"></div></div>
+    </div>
+
+    <div class="program-card">
+      <span class="card-number">04</span>
+      <span class="card-badge badge-hype">Przygoda</span>
+      <h3>Szkolny escape room</h3>
+      <p>Zagadki, łamigłówki i zamknięte sale lekcyjne. Masz 45 minut na wydostanie się na długą przerwę.</p>
+      <div class="power-bar"><div class="power-fill" style="width: 88%;"></div></div>
+    </div>
+
+    <div class="program-card">
+      <span class="card-number">05</span>
+      <span class="card-badge badge-chill">Safety</span>
+      <h3>System ratunkowy dla ucznia</h3>
+      <p>Szybkie wsparcie w sytuacjach podbramkowych, ściągi, kalkulatory i zapasowe długopisy w pogotowiu.</p>
+      <div class="power-bar"><div class="power-fill" style="width: 100%;"></div></div>
+    </div>
+
+    <div class="program-card">
+      <span class="card-number">06</span>
+      <span class="card-badge badge-hype">Comfort</span>
+      <h3>Klimatyzacje w klasach</h3>
+      <p>Koniec z duchotą na lekcjach w maju i czerwcu. Czas na powiew cywilizacji i komfort nauki.</p>
+      <div class="power-bar"><div class="power-fill" style="width: 92%;"></div></div>
+    </div>
+
+    <div class="program-card">
+      <span class="card-number">07</span>
+      <span class="card-badge badge-absurd">Szansa: 49.9%</span>
+      <h3>Obiady (jak się uda)</h3>
+      <p>Najbardziej szczera obietnica w historii samorządów. Walczymy o lepszy catering i cieplejsze posiłki.</p>
+      <div class="power-bar"><div class="power-fill" style="width: 50%;"></div></div>
+    </div>
+
+    <div class="program-card">
+      <span class="card-number">08</span>
+      <span class="card-badge badge-chill">Chillout</span>
+      <h3>Miejsce spokoju (dla każdego)</h3>
+      <p>Strefa ciszy, wygodne pufy, zero hałasu i czas na regenerację przed kolejną lekcją.</p>
+      <div class="power-bar"><div class="power-fill" style="width: 95%;"></div></div>
+    </div>
+
+    <div class="program-card">
+      <span class="card-number">09</span>
+      <span class="card-badge badge-hype">Handel</span>
+      <h3>Wyprzedaże dla uczniów</h3>
+      <p>Szkolny targ podręczników, ciuchów, notatek i gadżetów. Daj drugie życie swoim rzeczom.</p>
+      <div class="power-bar"><div class="power-fill" style="width: 80%;"></div></div>
+    </div>
+
+    <div class="program-card">
+      <span class="card-number">10</span>
+      <span class="card-badge badge-absurd">Art</span>
+      <h3>Grafitti wall</h3>
+      <p>Legalna ściana na terenie szkoły do ekspresji artystycznej. Pokaż swój styl!</p>
+      <div class="power-bar"><div class="power-fill" style="width: 87%;"></div></div>
+    </div>
+
+    <div class="program-card">
+      <span class="card-number">11</span>
+      <span class="card-badge badge-hype">Gala</span>
+      <h3>Szkolne nagrody Oscar</h3>
+      <p>Uroczysta gala z nagrodami w absurdalnych i śmiesznych kategoriach dla uczniów i nauczycieli.</p>
+      <div class="power-bar"><div class="power-fill" style="width: 93%;"></div></div>
+    </div>
+
+    <div class="program-card">
+      <span class="card-number">12</span>
+      <span class="card-badge badge-absurd">Cash</span>
+      <h3>Pomysł za 1000 zł</h3>
+      <p>Budżet uczniowski. Zgłoś projekt, przejdź głosowanie i zgarnij 1000 zł na jego realizację.</p>
+      <div class="power-bar"><div class="power-fill" style="width: 99%;"></div></div>
+    </div>
+
+    <div class="program-card">
+      <span class="card-number">13</span>
+      <span class="card-badge badge-hype">Humor</span>
+      <h3>Roast day</h3>
+      <p>Dzień humoru z dystansem. Scena otwarta na stand-up, dowcipy i po prostu dobrą zabawę.</p>
+      <div class="power-bar"><div class="power-fill" style="width: 96%;"></div></div>
+    </div>
+
+  </div>
+
+  <!-- Galeria Zdjęć -->
+  <section class="section-title">
+    <p>Galeria Kandydata</p>
+    <h2>Visual Power Wall</h2>
+  </section>
+
+  <div class="photo-wall">
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <img src="1000016180.arw" alt="Jakub Strybulewicz 1">
+        <div class="gallery-tag">Jakub #1 — Skupienie</div>
+      </div>
+      <div class="gallery-item">
+        <img src="1000016184.arw" alt="Jakub Strybulewicz 2">
+        <div class="gallery-tag">Jakub #2 — Wizja Przyszłości</div>
+      </div>
+      <div class="gallery-item">
+        <img src="1000016185.arw" alt="Jakub Strybulewicz 3">
+        <div class="gallery-tag">Jakub #3 — Gotowy do Działania</div>
+      </div>
+      <div class="gallery-item">
+        <img src="1000016714.jpg" alt="Jakub Strybulewicz Meme Edition">
+        <div class="gallery-tag">Jakub #4 — Secret Boss Form ⚡</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interaktywny Boks Wyborczy -->
+  <div class="vote-cta">
+    <h2>Oddaj Wirtualny Głos!</h2>
+    <p style="color: var(--text-dim); margin-bottom: 30px;">Kliknij przycisk poniżej, aby podbić statystyki poparcia dla Jakuba!</p>
+    <button class="big-vote-btn" onclick="addVote()">GŁOSUJ NA JAKUBA! 🔥</button>
+    <div class="counter-display">
+      Licznik Oddanych Głosów: <span id="voteCount">1337</span>
+    </div>
+  </div>
+
+  <!-- Stopka -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-logos">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Zwi%C4%85zek_Zak%C5%82ad%C3%B3w_Doskonalenia_Zawodowego_logo.svg/512px-Zwi%C4%85zek_Zak%C5%82ad%C3%B3w_Doskonalenia_Zawodowego_logo.svg.png" alt="ZDZ Logo" class="logo-zdz" style="height: 35px; padding: 2px 10px;">
+        <img src="1000016717.png" alt="MATE STUDIO AUDIO & VIDEO" style="height: 35px; border-radius: 6px;">
+      </div>
+      <div class="copyright">
+        Copyright wszelkie prawa zastrzeżone 2026/2027
+      </div>
+      <div class="author-badge">
+        Made by Jakub Puchała
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const images = [
+      '1000016180.arw',
+      '1000016184.arw',
+      '1000016185.arw',
+      '1000016714.jpg'
+    ];
+    let currentIdx = 0;
+
+    function toggleMemeMode() {
+      currentIdx = (currentIdx + 1) % images.length;
+      document.getElementById('candidateImage').src = images[currentIdx];
+    }
+
+    let count = 1337;
+    function addVote() {
+      count++;
+      document.getElementById('voteCount').innerText = count;
+    }
+  </script>
+</body>
 </html>
