@@ -12,577 +12,8 @@
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.577.0/dist/umd/lucide.min.js" type="text/javascript"></script>
   <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
 
-  <style>
-    :root {
-      --ink: #07070b;
-      --panel: #101018;
-      --panel-2: #171725;
-      --lime: #a6ff00;
-      --pink: #ff3c9e;
-      --cyan: #00e5ff;
-      --yellow: #ffe600;
-      --white: #f8f7ff;
-      --muted: #a7a7bc;
-      --line: #2b2b3b;
-    }
-
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      min-width: 320px;
-      background: var(--ink);
-      color: var(--white);
-      font-family: "DM Sans", sans-serif;
-      overflow-x: hidden;
-    }
-
-    .noise {
-      pointer-events: none;
-      position: fixed;
-      inset: 0;
-      z-index: 50;
-      opacity: .055;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
-    }
-
-    .ticker-wrap {
-      width: 100%;
-      overflow: hidden;
-      background: var(--lime);
-      color: #060806;
-      border-bottom: 3px solid #050505;
-      position: sticky;
-      top: 0;
-      z-index: 30;
-      white-space: nowrap;
-      box-shadow: 0 5px 25px rgba(166,255,0,.28);
-    }
-
-    .ticker {
-      display: inline-block;
-      padding: 12px 0;
-      font-family: "Space Mono", monospace;
-      font-size: .78rem;
-      font-weight: 700;
-      letter-spacing: .12em;
-      animation: scrollTicker 26s linear infinite;
-    }
-
-    @keyframes scrollTicker {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
-    }
-
-    .site-shell {
-      width: 100%;
-      min-height: 100%;
-      position: relative;
-      background:
-        radial-gradient(circle at 90% 11%, rgba(255, 60, 158, .14), transparent 25rem),
-        radial-gradient(circle at 8% 35%, rgba(0,229,255,.12), transparent 27rem),
-        var(--ink);
-    }
-
-    .grid-bg {
-      position: absolute;
-      inset: 0;
-      background-image: linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
-      background-size: 42px 42px;
-      mask-image: linear-gradient(to bottom, black, transparent 80%);
-      pointer-events: none;
-    }
-
-    .content-width {
-      width: 100%;
-      max-width: 1280px;
-      margin: 0 auto;
-      padding-left: clamp(19px, 3vw, 42px);
-      padding-right: clamp(19px, 3vw, 42px);
-    }
-
-    .header {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 22px;
-      padding-top: 26px;
-      padding-bottom: 20px;
-    }
-
-    .brand-zone { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; }
-    .zdz-logo {
-      width: 132px;
-      height: 62px;
-      object-fit: contain;
-      object-position: center;
-      padding: 0;
-      background: transparent;
-      border: 0;
-    }
-    .mate-logo {
-      width: 122px;
-      height: 58px;
-      object-fit: contain;
-      padding: 0;
-    }
-
-    .date-badge {
-      border: 2px solid var(--yellow);
-      color: var(--yellow);
-      background: rgba(255,230,0,.08);
-      border-radius: 999px;
-      padding: 11px 18px;
-      font-family: "Space Mono", monospace;
-      font-size: .76rem;
-      font-weight: 700;
-      letter-spacing: .05em;
-      text-transform: uppercase;
-      box-shadow: 0 0 22px rgba(255,230,0,.13);
-      animation: badgePulse 2.2s ease-in-out infinite;
-    }
-
-    @keyframes badgePulse {
-      50% { transform: rotate(-1deg) scale(1.03); box-shadow: 0 0 32px rgba(255,230,0,.30); }
-    }
-
-    .hero {
-      position: relative;
-      z-index: 2;
-      display: grid;
-      grid-template-columns: 1.05fr .95fr;
-      gap: 54px;
-      align-items: center;
-      padding-top: 46px;
-      padding-bottom: 78px;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      background: var(--pink);
-      color: white;
-      border-radius: 8px;
-      padding: 7px 12px;
-      transform: rotate(-2deg);
-      font-family: "Space Mono", monospace;
-      font-size: .72rem;
-      font-weight: 700;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-    }
-
-    .hero-title {
-      margin: 23px 0 19px;
-      max-width: 730px;
-      font-family: "Fraunces", serif;
-      font-weight: 900;
-      text-transform: uppercase;
-      font-size: clamp(3rem, 7vw, 6.4rem);
-      line-height: .84;
-      letter-spacing: -.07em;
-    }
-
-    .hero-title .glow {
-      color: var(--lime);
-      text-shadow: 4px 4px 0 var(--pink), 0 0 35px rgba(166,255,0,.25);
-      display: block;
-    }
-
-    .hero-copy {
-      max-width: 600px;
-      color: var(--muted);
-      font-size: clamp(1rem, 2vw, 1.17rem);
-      line-height: 1.7;
-    }
-
-    .stats {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 30px;
-    }
-
-    .stat {
-      min-width: 132px;
-      padding: 16px 17px;
-      background: rgba(16,16,24,.92);
-      border: 1px solid var(--line);
-      border-radius: 15px;
-    }
-
-    .stat-value {
-      color: var(--cyan);
-      font-family: "Fraunces", serif;
-      font-size: 1.75rem;
-      font-weight: 800;
-      line-height: 1;
-    }
-
-    .stat-label {
-      color: var(--muted);
-      font-family: "Space Mono", monospace;
-      font-size: .62rem;
-      line-height: 1.4;
-      text-transform: uppercase;
-      letter-spacing: .05em;
-      margin-top: 7px;
-    }
-
-    .photo-stage {
-      position: relative;
-      padding: 13px 13px 24px 0;
-    }
-
-    .photo-stage::before {
-      content: "KANDYDAT // NIE NPC";
-      position: absolute;
-      right: -8px;
-      top: 18px;
-      transform: rotate(90deg);
-      transform-origin: right top;
-      color: var(--pink);
-      font-family: "Space Mono", monospace;
-      font-size: .64rem;
-      font-weight: 700;
-      letter-spacing: .11em;
-    }
-
-    .candidate-card {
-      overflow: hidden;
-      position: relative;
-      border: 3px solid var(--lime);
-      border-radius: 26px;
-      background: var(--panel);
-      box-shadow: 12px 12px 0 var(--lime), 0 30px 60px rgba(0,0,0,.55);
-      transition: transform .3s ease;
-    }
-
-    .candidate-card:hover { transform: translate(-3px, -6px) rotate(1deg); }
-
-    .candidate-photo {
-      width: 100%;
-      height: 520px;
-      object-fit: cover;
-      object-position: center;
-      display: block;
-      filter: saturate(1.12) contrast(1.05);
-    }
-
-    .candidate-overlay {
-      position: absolute;
-      inset: auto 0 0;
-      padding: 48px 24px 20px;
-      background: linear-gradient(transparent, rgba(4,4,8,.96));
-    }
-
-    .overlay-name {
-      font-family: "Fraunces", serif;
-      font-weight: 900;
-      letter-spacing: -.03em;
-      font-size: 1.5rem;
-    }
-
-    .overlay-mode {
-      color: var(--lime);
-      font-family: "Space Mono", monospace;
-      font-size: .68rem;
-      text-transform: uppercase;
-      letter-spacing: .08em;
-      margin-top: 4px;
-    }
-
-    .stamp {
-      position: absolute;
-      left: -28px;
-      top: -18px;
-      width: 124px;
-      height: 124px;
-      display: grid;
-      place-items: center;
-      border: 3px dashed var(--yellow);
-      color: var(--yellow);
-      border-radius: 50%;
-      background: rgba(7,7,11,.85);
-      font-family: "Space Mono", monospace;
-      font-size: .72rem;
-      font-weight: 700;
-      text-align: center;
-      line-height: 1.35;
-      transform: rotate(-15deg);
-    }
-
-    .section-head {
-      position: relative;
-      z-index: 2;
-      text-align: center;
-      padding: 60px 20px 34px;
-    }
-
-    .section-kicker {
-      color: var(--lime);
-      font-family: "Space Mono", monospace;
-      font-size: .76rem;
-      font-weight: 700;
-      letter-spacing: .16em;
-      text-transform: uppercase;
-    }
-
-    .section-title {
-      margin: 9px auto 0;
-      font-family: "Fraunces", serif;
-      font-size: clamp(2.55rem, 5vw, 4.8rem);
-      font-weight: 900;
-      line-height: .95;
-      text-transform: uppercase;
-      letter-spacing: -.06em;
-    }
-
-    .program-grid {
-      position: relative;
-      z-index: 2;
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
-      gap: 17px;
-      padding-bottom: 80px;
-    }
-
-    .program-card {
-      position: relative;
-      overflow: hidden;
-      min-height: 234px;
-      display: flex;
-      flex-direction: column;
-      padding: 25px;
-      border: 1px solid var(--line);
-      border-radius: 19px;
-      background: linear-gradient(145deg, rgba(24,24,38,.96), rgba(14,14,22,.96));
-      transition: transform .24s ease, border-color .24s ease, box-shadow .24s ease;
-    }
-
-    .program-card:hover {
-      transform: translateY(-7px);
-      border-color: var(--lime);
-      box-shadow: 0 15px 35px rgba(166,255,0,.12);
-    }
-
-    .card-number {
-      position: absolute;
-      top: 13px;
-      right: 16px;
-      color: rgba(255,255,255,.055);
-      font-family: "Fraunces", serif;
-      font-weight: 900;
-      font-size: 4.4rem;
-      line-height: 1;
-    }
-
-    .tag {
-      position: relative;
-      z-index: 1;
-      align-self: flex-start;
-      border-radius: 999px;
-      padding: 5px 10px;
-      font-family: "Space Mono", monospace;
-      font-size: .62rem;
-      font-weight: 700;
-      letter-spacing: .04em;
-      text-transform: uppercase;
-    }
-    .tag-lime { color: var(--lime); border: 1px solid var(--lime); background: rgba(166,255,0,.08); }
-    .tag-pink { color: var(--pink); border: 1px solid var(--pink); background: rgba(255,60,158,.08); }
-    .tag-cyan { color: var(--cyan); border: 1px solid var(--cyan); background: rgba(0,229,255,.08); }
-    .tag-yellow { color: var(--yellow); border: 1px solid var(--yellow); background: rgba(255,230,0,.08); }
-
-    .program-name {
-      position: relative;
-      z-index: 1;
-      margin: 21px 0 9px;
-      font-family: "Fraunces", serif;
-      font-size: 1.43rem;
-      line-height: 1.06;
-      font-weight: 800;
-    }
-
-    .program-copy { position: relative; z-index: 1; color: var(--muted); font-size: .92rem; line-height: 1.58; }
-
-    .powerline { margin-top: auto; padding-top: 21px; display: flex; align-items: center; gap: 8px; }
-    .powerline-track { height: 5px; flex: 1; overflow: hidden; background: #2a2a38; border-radius: 10px; }
-    .powerline-fill { height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--lime), var(--cyan)); }
-    .powerline-label { color: var(--muted); font-family: "Space Mono", monospace; font-size: .59rem; }
-
-    .gallery-wrap { position: relative; z-index: 2; padding-bottom: 94px; }
-    .gallery-grid { display: grid; grid-template-columns: 1.15fr .85fr .85fr; gap: 17px; }
-    .gallery-card {
-      min-height: 330px;
-      position: relative;
-      overflow: hidden;
-      border: 2px solid var(--line);
-      border-radius: 21px;
-      background: var(--panel);
-    }
-    .gallery-card:first-child { min-height: 430px; }
-    .gallery-card:hover { border-color: var(--pink); }
-    .gallery-image { width: 100%; height: 100%; position: absolute; inset: 0; object-fit: cover; transition: transform .55s ease; }
-    .gallery-card:hover .gallery-image { transform: scale(1.08); }
-    .gallery-caption {
-      position: absolute;
-      left: 14px;
-      right: 14px;
-      bottom: 14px;
-      padding: 10px 12px;
-      border: 1px solid rgba(255,255,255,.18);
-      border-radius: 10px;
-      background: rgba(5,5,8,.74);
-      backdrop-filter: blur(9px);
-      color: white;
-      font-family: "Space Mono", monospace;
-      font-size: .66rem;
-      font-weight: 700;
-      letter-spacing: .04em;
-      text-transform: uppercase;
-    }
-
-    .poster-section { position: relative; z-index: 2; padding-bottom: 72px; }
-    .poster-panel { max-width: 930px; margin: auto; padding: 42px 25px; text-align: center; border: 3px solid var(--cyan); border-radius: 27px; background: linear-gradient(135deg, #101d2a, #14101e); }
-    .poster-preview { max-width: 330px; height: 430px; margin: 24px auto; overflow: hidden; border: 2px solid var(--cyan); border-radius: 16px; background: #07070b; }
-    .poster-image { width: 100%; height: 100%; object-fit: cover; }
-    .poster-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 14px; }
-    .download-button { display: inline-flex; align-items: center; justify-content: center; border: 2px solid var(--lime); border-radius: 999px; padding: 14px 24px; color: var(--lime); font-family: "Space Mono", monospace; font-size: .78rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; text-decoration: none; }
-    .poster-status { min-height: 20px; margin-top: 16px; color: var(--cyan); font-family: "Space Mono", monospace; font-size: .68rem; }
-    .vote-section { position: relative; z-index: 2; padding-bottom: 96px; }
-    .vote-panel {
-      overflow: hidden;
-      position: relative;
-      max-width: 930px;
-      margin: auto;
-      text-align: center;
-      border: 3px solid var(--pink);
-      border-radius: 27px;
-      padding: clamp(34px, 6vw, 64px) 25px;
-      background: linear-gradient(135deg, #20122c, #101622);
-      box-shadow: 0 0 55px rgba(255,60,158,.2);
-    }
-    .vote-panel::after {
-      content: "VOTE VOTE VOTE VOTE";
-      position: absolute;
-      inset: auto -50px -22px;
-      color: rgba(255,255,255,.045);
-      white-space: nowrap;
-      font-family: "Fraunces", serif;
-      font-size: 5rem;
-      font-weight: 900;
-      letter-spacing: -.06em;
-      pointer-events: none;
-    }
-
-    .vote-heading {
-      position: relative;
-      z-index: 1;
-      margin: 10px 0 13px;
-      font-family: "Fraunces", serif;
-      font-size: clamp(2.2rem, 5vw, 4rem);
-      line-height: .95;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: -.05em;
-    }
-
-    .vote-copy { position: relative; z-index: 1; color: var(--muted); max-width: 570px; margin: 0 auto 26px; }
-    .vote-button {
-      position: relative;
-      z-index: 1;
-      border: 0;
-      border-radius: 999px;
-      padding: 17px 29px;
-      background: var(--lime);
-      color: #071006;
-      cursor: pointer;
-      font-family: "Space Mono", monospace;
-      font-size: .9rem;
-      font-weight: 700;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      box-shadow: 0 10px 0 #5e9400, 0 17px 30px rgba(166,255,0,.28);
-      transition: transform .15s ease, box-shadow .15s ease;
-    }
-    .vote-button:hover { transform: translateY(-3px) rotate(-1deg); }
-    .vote-button:active { transform: translateY(6px); box-shadow: 0 3px 0 #5e9400; }
-    .vote-button:focus-visible { outline: 3px solid white; outline-offset: 4px; }
-    .vote-counter { position: relative; z-index: 1; margin-top: 26px; color: var(--muted); font-size: .9rem; }
-    #support-count { color: var(--yellow); font-family: "Fraunces", serif; font-size: 1.6rem; font-weight: 900; }
-    #vote-feedback { min-height: 20px; position: relative; z-index: 1; color: var(--cyan); font-family: "Space Mono", monospace; font-size: .68rem; margin-top: 7px; }
-
-    footer {
-      position: relative;
-      z-index: 2;
-      background: #040406;
-      border-top: 1px solid var(--line);
-      text-align: center;
-      padding: 42px 25px;
-    }
-
-    .footer-logo { width: 132px; height: 62px; object-fit: contain; object-position: center; border-radius: 0; border: 0; background: transparent; padding: 0; }
-    .footer-logos { display: flex; justify-content: center; align-items: center; gap: 14px; flex-wrap: wrap; }
-    .copyright { color: #9e9eaf; margin-top: 19px; font-size: .88rem; }
-    .madeby {
-      display: inline-block;
-      margin-top: 12px;
-      padding: 7px 12px;
-      color: var(--cyan);
-      border: 1px solid #264d55;
-      border-radius: 999px;
-      background: rgba(0,229,255,.05);
-      font-family: "Space Mono", monospace;
-      font-size: .67rem;
-      font-weight: 700;
-    }
-
-    @media (max-width: 1100px) {
-      .hero { gap: 34px; }
-      .hero-title { font-size: clamp(2.8rem, 7.2vw, 5.5rem); }
-      .program-grid { gap: 14px; }
-      .program-card { padding: 21px; }
-      .gallery-grid { gap: 14px; }
-    }
-    @media (max-width: 950px) {
-      .hero { grid-template-columns: 1fr; }
-      .hero-copy { max-width: 690px; }
-      .photo-stage { max-width: 620px; margin: 0 auto; width: 100%; }
-      .program-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
-      .gallery-grid { grid-template-columns: 1fr 1fr; }
-      .gallery-card:first-child { grid-column: 1 / -1; min-height: 390px; }
-    }
-    @media (max-width: 780px) {
-      .header { align-items: flex-start; }
-      .candidate-photo { height: clamp(390px, 62vw, 500px); }
-      .section-head { padding-top: 48px; padding-bottom: 28px; }
-      .section-title { font-size: clamp(2.35rem, 7vw, 4rem); }
-      .vote-button, .download-button { padding: 15px 21px; }
-    }
-    @media (max-width: 620px) {
-      .header { justify-content: center; text-align: center; }
-      .brand-zone { justify-content: center; }
-      .hero { padding-top: 26px; padding-bottom: 58px; gap: 31px; }
-      .hero-title { font-size: clamp(2.55rem, 14vw, 4.3rem); line-height: .88; }
-      .hero-copy { font-size: 1rem; line-height: 1.58; }
-      .candidate-photo { height: 420px; }
-      .photo-stage { padding-right: 8px; }
-      .stamp { left: -10px; width: 98px; height: 98px; font-size: .6rem; }
-      .poster-panel, .vote-panel { padding-left: 18px; padding-right: 18px; }
-      .poster-preview { height: min(430px, 118vw); }
-      .vote-heading { font-size: clamp(2rem, 10vw, 3.2rem); }
-      .stats { display: grid; grid-template-columns: 1fr 1fr; }
-      .stat:last-child { grid-column: 1 / -1; }
-      .program-grid, .gallery-grid { grid-template-columns: 1fr; }
-      .gallery-card:first-child { grid-column: auto; min-height: 340px; }
-      .gallery-card { min-height: 280px; }
-      .program-card { min-height: 215px; }
-    }
-  </style>
+  <!-- Plik ze stylami CSS -->
+  <link rel="stylesheet" href="style.css">
 </head>
 <body data-template-id="__page-root">
   <div class="noise"></div>
@@ -654,175 +85,191 @@
       </section>
 
        <!-- Nagłówek sekcji programu -->
-      <section class="section-head" aria-labelledby="program-heading">
+      <section class="section-head" aria-labelledby="program-heading-1">
         <p data-template-id="program-kicker" class="canva-text section-kicker">Program Wyborczy</p>
-        <h2 id="program-heading" data-template-id="program-heading" class="canva-text section-title">Nowe Pomysły!</h2>
+        <h2 id="program-heading-1" data-template-id="program-heading" class="canva-text section-title">Nowe Pomysły!</h2>
       </section>
 
       <!-- Grid z nowymi punktami programu -->
-      <section class="content-width program-grid" aria-label="Program wyborczy">
-  <article class="program-card">
-    <span class="card-number">01</span>
-    <span data-template-id="tag-1" class="canva-tag tag tag-cyan">VLOG</span>
-    <h3 data-template-id="program-1-title" class="canva-text program-name">Vlog z życia szkoły</h3>
-    <p data-template-id="program-1-copy" class="canva-text program-copy">Jeden dzień, w którym będzie stworzony pełny vlog z życia szkoły!</p>
-    <div class="powerline">
-      <div class="powerline-track"><div class="powerline-fill" style="width:67%"></div></div>
-      <span class="powerline-label">67%</span>
-    </div>
-  </article>
+      <section class="content-width program-grid" aria-label="Program wyborczy - nowe pomysły">
+        <article class="program-card">
+          <span class="card-number">01</span>
+          <span data-template-id="tag-1" class="canva-tag tag tag-cyan">VLOG</span>
+          <h3 data-template-id="program-1-title" class="canva-text program-name">Vlog z życia szkoły</h3>
+          <p data-template-id="program-1-copy" class="canva-text program-copy">Jeden dzień, w którym będzie stworzony pełny vlog z życia szkoły!</p>
+          <div class="powerline">
+            <div class="powerline-track"><div class="powerline-fill" style="width:67%"></div></div>
+            <span class="powerline-label">67%</span>
+          </div>
+        </article>
+      </section>
 
       <!-- Nagłówek sekcji programu -->
-      <section class="section-head" aria-labelledby="program-heading">
-        <p data-template-id="program-kicker" class="canva-text section-kicker"></p>
-        <h2 id="program-heading" data-template-id="program-heading" class="canva-text section-title">13 Konkretnych Zmian</h2>
+      <section class="section-head" aria-labelledby="program-heading-2">
+        <p data-template-id="program-kicker-2" class="canva-text section-kicker"></p>
+        <h2 id="program-heading-2" data-template-id="program-heading-2" class="canva-text section-title">13 Konkretnych Zmian</h2>
       </section>
 
       <!-- Grid z kartami programu -->
-      <section class="content-width program-grid" aria-label="Program wyborczy">
-  <article class="program-card">
-    <span class="card-number">01</span>
-    <span data-template-id="tag-1" class="canva-tag tag tag-cyan">Opinia</span>
-    <h3 data-template-id="program-1-title" class="canva-text program-name">Cykliczne Ankiety dla Uczniów</h3>
-    <p data-template-id="program-1-copy" class="canva-text program-copy">Regularne zbieranie głosu społeczności uczniowskiej w najważniejszych sprawach.</p>
-    <div class="powerline">
-      <div class="powerline-track"><div class="powerline-fill" style="width:90%"></div></div>
-      <span class="powerline-label">90%</span>
-    </div>
-  </article>
+      <section class="content-width program-grid" aria-label="Program wyborczy - 13 zmian">
+        <article class="program-card">
+          <span class="card-number">01</span>
+          <span data-template-id="tag-1" class="canva-tag tag tag-cyan">Opinia</span>
+          <h3 data-template-id="program-1-title" class="canva-text program-name">Cykliczne Ankiety dla Uczniów</h3>
+          <p data-template-id="program-1-copy" class="canva-text program-copy">Regularne zbieranie głosu społeczności uczniowskiej w najważniejszych sprawach.</p>
+          <div class="powerline">
+            <div class="powerline-track"><div class="powerline-fill" style="width:90%"></div></div>
+            <span class="powerline-label">90%</span>
+          </div>
+        </article>
 
-  <article class="program-card">
-    <span class="card-number">02</span>
-    <span data-template-id="tag-2" class="canva-tag tag tag-pink">Inicjatywa</span>
-    <h3 data-template-id="program-2-title" class="canva-text program-name">Szkolny Eksperyment Social Media</h3>
-    <p data-template-id="program-2-copy" class="canva-text program-copy">Wspólne projekty i wyzwania tworzone w mediach społecznościowych szkoły.</p>
-    <div class="powerline">
-      <div class="powerline-track"><div class="powerline-fill" style="width:85%"></div></div>
-      <span class="powerline-label">85%</span>
-    </div>
-  </article>
+        <article class="program-card">
+          <span class="card-number">02</span>
+          <span data-template-id="tag-2" class="canva-tag tag tag-pink">Inicjatywa</span>
+          <h3 data-template-id="program-2-title" class="canva-text program-name">Szkolny Eksperyment Social Media</h3>
+          <p data-template-id="program-2-copy" class="canva-text program-copy">Wspólne projekty i wyzwania tworzone w mediach społecznościowych szkoły.</p>
+          <div class="powerline">
+            <div class="powerline-track"><div class="powerline-fill" style="width:85%"></div></div>
+            <span class="powerline-label">85%</span>
+          </div>
+        </article>
 
-  <article class="program-card">
-    <span class="card-number">03</span>
-    <span data-template-id="tag-3" class="canva-tag tag tag-lime">Sport</span>
-    <h3 data-template-id="program-3-title" class="canva-text program-name">Szkolny Runmageddon</h3>
-    <p data-template-id="program-3-copy" class="canva-text program-copy">Tor przeszkód i integracyjny bieg sportowy na terenie szkoły.</p>
-    <div class="powerline">
-      <div class="powerline-track"><div class="powerline-fill" style="width:92%"></div></div>
-      <span class="powerline-label">92%</span>
-    </div>
-  </article>
+        <article class="program-card">
+          <span class="card-number">03</span>
+          <span data-template-id="tag-3" class="canva-tag tag tag-lime">Sport</span>
+          <h3 data-template-id="program-3-title" class="canva-text program-name">Szkolny Runmageddon</h3>
+          <p data-template-id="program-3-copy" class="canva-text program-copy">Tor przeszkód i integracyjny bieg sportowy na terenie szkoły.</p>
+          <div class="powerline">
+            <div class="powerline-track"><div class="powerline-fill" style="width:92%"></div></div>
+            <span class="powerline-label">92%</span>
+          </div>
+        </article>
 
-  <article class="program-card">
-    <span class="card-number">04</span>
-    <span data-template-id="tag-4" class="canva-tag tag tag-yellow">Rozrywka</span>
-    <h3 data-template-id="program-4-title" class="canva-text program-name">Szkolny Escape Room</h3>
-    <p data-template-id="program-4-copy" class="canva-text program-copy">Przekształcenie całej szkoły w dom zagadek podczas specjalnych wydarzeń.</p>
-    <div class="powerline">
-      <div class="powerline-track"><div class="powerline-fill" style="width:94%"></div></div>
-      <span class="powerline-label">94%</span>
-    </div>
-  </article>
+        <article class="program-card">
+          <span class="card-number">04</span>
+          <span data-template-id="tag-4" class="canva-tag tag tag-yellow">Rozrywka</span>
+          <h3 data-template-id="program-4-title" class="canva-text program-name">Szkolny Escape Room</h3>
+          <p data-template-id="program-4-copy" class="canva-text program-copy">Przekształcenie całej szkoły w dom zagadek podczas specjalnych wydarzeń.</p>
+          <div class="powerline">
+            <div class="powerline-track"><div class="powerline-fill" style="width:94%"></div></div>
+            <span class="powerline-label">94%</span>
+          </div>
+        </article>
 
-  <article class="program-card">
-    <span class="card-number">05</span>
-    <span data-template-id="tag-5" class="canva-tag tag tag-pink">Wsparcie</span>
-    <h3 data-template-id="program-5-title" class="canva-text program-name">System Ratunkowy dla Ucznia</h3>
-    <p data-template-id="program-5-copy" class="canva-text program-copy">Szybka pomoc naukowa i organizacyjna w trudnych sytuacjach szkolnych.</p>
-    <div class="powerline">
-      <div class="powerline-track"><div class="powerline-fill" style="width:98%"></div></div>
-      <span class="powerline-label">98%</span>
-    </div>
-  </article>
+        <article class="program-card">
+          <span class="card-number">05</span>
+          <span data-template-id="tag-5" class="canva-tag tag tag-pink">Wsparcie</span>
+          <h3 data-template-id="program-5-title" class="canva-text program-name">System Ratunkowy dla Ucznia</h3>
+          <p data-template-id="program-5-copy" class="canva-text program-copy">Szybka pomoc naukowa i organizacyjna w trudnych sytuacjach szkolnych.</p>
+          <div class="powerline">
+            <div class="powerline-track"><div class="powerline-fill" style="width:98%"></div></div>
+            <span class="powerline-label">98%</span>
+          </div>
+        </article>
 
-  <article class="program-card">
-    <span class="card-number">06</span>
-    <span data-template-id="tag-6" class="canva-tag tag tag-cyan">Komfort</span>
-    <h3 data-template-id="program-6-title" class="canva-text program-name">Klimatyzacje w Klasach</h3>
-    <p data-template-id="program-6-copy" class="canva-text program-copy">Montaż klimatyzacji w najbardziej nasłonecznionych salach lekcyjnych.</p>
-    <div class="powerline">
-      <div class="powerline-track"><div class="powerline-fill" style="width:87%"></div></div>
-      <span class="powerline-label">87%</span>
-    </div>
-  </article>
+        <article class="program-card">
+          <span class="card-number">06</span>
+          <span data-template-id="tag-6" class="canva-tag tag tag-cyan">Komfort</span>
+          <h3 data-template-id="program-6-title" class="canva-text program-name">Klimatyzacje w Klasach</h3>
+          <p data-template-id="program-6-copy" class="canva-text program-copy">Montaż klimatyzacji w najbardziej nasłonecznionych salach lekcyjnych.</p>
+          <div class="powerline">
+            <div class="powerline-track"><div class="powerline-fill" style="width:87%"></div></div>
+            <span class="powerline-label">87%</span>
+          </div>
+        </article>
 
-  <article class="program-card">
-    <span class="card-number">07</span>
-    <span data-template-id="tag-7" class="canva-tag tag tag-lime">Jedzenie</span>
-    <h3 data-template-id="program-7-title" class="canva-text program-name">Obiady (Jak się uda)</h3>
-    <p data-template-id="program-7-copy" class="canva-text program-copy">Starania o wprowadzenie ciepłych posiłków lub cateringu w szkole.</p>
-    <div class="powerline">
-      <div class="powerline-track"><div class="powerline-fill" style="width:96%"></div></div>
-      <span class="powerline-label">96%</span>
-    </div>
-  </article>
+        <article class="program-card">
+          <span class="card-number">07</span>
+          <span data-template-id="tag-7" class="canva-tag tag tag-lime">Jedzenie</span>
+          <h3 data-template-id="program-7-title" class="canva-text program-name">Obiady (Jak się uda)</h3>
+          <p data-template-id="program-7-copy" class="canva-text program-copy">Starania o wprowadzenie ciepłych posiłków lub cateringu w szkole.</p>
+          <div class="powerline">
+            <div class="powerline-track"><div class="powerline-fill" style="width:96%"></div></div>
+            <span class="powerline-label">96%</span>
+          </div>
+        </article>
 
-  <article class="program-card">
-    <span class="card-number">08</span>
-    <span data-template-id="tag-8" class="canva-tag tag tag-yellow">Relaks</span>
-    <h3 data-template-id="program-8-title" class="canva-text program-name">Miejsce Spokoju</h3>
-    <p data-template-id="program-8-copy" class="canva-text program-copy">Cicha strefa odpoczynku dostępna dla każdego ucznia na przerwach.</p>
-    <div class="powerline">
-      <div class="powerline-track"><div class="powerline-fill" style="width:89%"></div></div>
-      <span class="powerline-label">89%</span>
-    </div>
-  </article>
+        <article class="program-card">
+          <span class="card-number">08</span>
+          <span data-template-id="tag-8" class="canva-tag tag tag-yellow">Relaks</span>
+          <h3 data-template-id="program-8-title" class="canva-text program-name">Miejsce Spokoju</h3>
+          <p data-template-id="program-8-copy" class="canva-text program-copy">Cicha strefa odpoczynku dostępna dla każdego ucznia na przerwach.</p>
+          <div class="powerline">
+            <div class="powerline-track"><div class="powerline-fill" style="width:89%"></div></div>
+            <span class="powerline-label">89%</span>
+          </div>
+        </article>
 
-  <article class="program-card">
-    <span class="card-number">09</span>
-    <span data-template-id="tag-9" class="canva-tag tag tag-lime">Społeczność</span>
-    <h3 data-template-id="program-9-title" class="canva-text program-name">Wyprzedaże dla Uczniów</h3>
-    <p data-template-id="program-9-copy" class="canva-text program-copy">Szkolny pchli targ – wymiana i sprzedaż podręczników, ubrań oraz gadżetów.</p>
-    <div class="powerline">
-      <div class="powerline-track"><div class="powerline-fill" style="width:83%"></div></div>
-      <span class="powerline-label">83%</span>
-    </div>
-  </article>
+        <article class="program-card">
+          <span class="card-number">09</span>
+          <span data-template-id="tag-9" class="canva-tag tag tag-lime">Społeczność</span>
+          <h3 data-template-id="program-9-title" class="canva-text program-name">Wyprzedaże dla Uczniów</h3>
+          <p data-template-id="program-9-copy" class="canva-text program-copy">Szkolny pchli targ – wymiana i sprzedaż podręczników, ubrań oraz gadżetów.</p>
+          <div class="powerline">
+            <div class="powerline-track"><div class="powerline-fill" style="width:83%"></div></div>
+            <span class="powerline-label">83%</span>
+          </div>
+        </article>
 
-  <article class="program-card">
-    <span class="card-number">10</span>
-    <span data-template-id="tag-10" class="canva-tag tag tag-pink">Sztuka</span>
-    <h3 data-template-id="program-10-title" class="canva-text program-name">Graffiti Wall</h3>
-    <p data-template-id="program-10-copy" class="canva-text program-copy">Wyznaczone miejsce na legalną ekspresję artystyczną uczniów na terenie szkoły.</p>
-    <div class="powerline">
-      <div class="powerline-track"><div class="powerline-fill" style="width:88%"></div></div>
-      <span class="powerline-label">88%</span>
-    </div>
-  </article>
+        <article class="program-card">
+          <span class="card-number">10</span>
+          <span data-template-id="tag-10" class="canva-tag tag tag-pink">Sztuka</span>
+          <h3 data-template-id="program-10-title" class="canva-text program-name">Graffiti Wall</h3>
+          <p data-template-id="program-10-copy" class="canva-text program-copy">Wyznaczone miejsce na legalną ekspresję artystyczną uczniów na terenie szkoły.</p>
+          <div class="powerline">
+            <div class="powerline-track"><div class="powerline-fill" style="width:88%"></div></div>
+            <span class="powerline-label">88%</span>
+          </div>
+        </article>
 
-  <article class="program-card">
-    <span class="card-number">11</span>
-    <span data-template-id="tag-11" class="canva-tag tag tag-yellow">Tradycja</span>
-    <h3 data-template-id="program-11-title" class="canva-text program-name">Szkolne Nagrody Oscar</h3>
-    <p data-template-id="program-11-copy" class="canva-text program-copy">Gala z plebiscytem i humorystycznymi nagrodami dla uczniów oraz nauczycieli.</p>
-    <div class="powerline">
-      <div class="powerline-track"><div class="powerline-fill" style="width:91%"></div></div>
-      <span class="powerline-label">91%</span>
-    </div>
-  </article>
+        <article class="program-card">
+          <span class="card-number">11</span>
+          <span data-template-id="tag-11" class="canva-tag tag tag-yellow">Tradycja</span>
+          <h3 data-template-id="program-11-title" class="canva-text program-name">Szkolne Nagrody Oscar</h3>
+          <p data-template-id="program-11-copy" class="canva-text program-copy">Gala z plebiscytem i humorystycznymi nagrodami dla uczniów oraz nauczycieli.</p>
+          <div class="powerline">
+            <div class="powerline-track"><div class="powerline-fill" style="width:91%"></div></div>
+            <span class="powerline-label">91%</span>
+          </div>
+        </article>
 
-  <article class="program-card">
-    <span class="card-number">12</span>
-    <span data-template-id="tag-12" class="canva-tag tag tag-lime">Budżet</span>
-    <h3 data-template-id="program-12-title" class="canva-text program-name">Pomysł za 1000 zł</h3>
-    <p data-template-id="program-12-copy" class="canva-text program-copy">Konkurs na najciekawszy projekt uczniowski finansowany ze środków samorządu.</p>
-    <div class="powerline">
-      <div class="powerline-track"><div class="powerline-fill" style="width:95%"></div></div>
-      <span class="powerline-label">95%</span>
-    </div>
-  </article>
+        <article class="program-card">
+          <span class="card-number">12</span>
+          <span data-template-id="tag-12" class="canva-tag tag tag-lime">Budżet</span>
+          <h3 data-template-id="program-12-title" class="canva-text program-name">Pomysł za 1000 zł</h3>
+          <p data-template-id="program-12-copy" class="canva-text program-copy">Konkurs na najciekawszy projekt uczniowski finansowany ze środków samorządu.</p>
+          <div class="powerline">
+            <div class="powerline-track"><div class="powerline-fill" style="width:95%"></div></div>
+            <span class="powerline-label">95%</span>
+          </div>
+        </article>
 
-  <article class="program-card">
-    <span class="card-number">13</span>
-    <span data-template-id="tag-13" class="canva-tag tag tag-pink">Rozrywka</span>
-    <h3 data-template-id="program-13-title" class="canva-text program-name">Roast Day</h3>
-    <p data-template-id="program-13-copy" class="canva-text program-copy">Dzień z dystansem – coroczny szkolny roast ze wspólną zabawą.</p>
-    <div class="powerline">
-      <div class="powerline-track"><div class="powerline-fill" style="width:92%"></div></div>
-      <span class="powerline-label">92%</span>
-    </div>
-  </article>
-</section>
+        <article class="program-card">
+          <span class="card-number">13</span>
+          <span data-template-id="tag-13" class="canva-tag tag tag-pink">Rozrywka</span>
+          <h3 data-template-id="program-13-title" class="canva-text program-name">Roast Day</h3>
+          <p data-template-id="program-13-copy" class="canva-text program-copy">Dzień z dystansem – coroczny szkolny roast ze wspólną zabawą.</p>
+          <div class="powerline">
+            <div class="powerline-track"><div class="powerline-fill" style="width:92%"></div></div>
+            <span class="powerline-label">92%</span>
+          </div>
+        </article>
+      </section>
+
+      <!-- NOWA SEKCJA: Formularz wysyłania propozycji -->
+      <section class="content-width proposal-section" aria-labelledby="proposal-heading">
+        <div class="proposal-panel">
+          <p class="canva-text section-kicker">Masz Swój Pomysł?</p>
+          <h2 id="proposal-heading" class="canva-text proposal-heading">Zgłoś Propozycję!</h2>
+          <p class="canva-text proposal-copy">Masz pomysł na zmianę w szkole? Wpisz go poniżej — trafi bezpośrednio do mojego sztabu!</p>
+          
+          <form id="proposal-form" class="proposal-form">
+            <textarea id="proposal-input" class="proposal-textarea" placeholder="Napisz tutaj swój pomysł..." required></textarea>
+            <button type="submit" id="proposal-submit" class="canva-button vote-button">Wyślij Pomysł 🚀</button>
+          </form>
+          
+          <p id="proposal-feedback" class="proposal-feedback" aria-live="polite"></p>
+        </div>
       </section>
 
       <!-- Sekcja Galerii -->
@@ -905,62 +352,7 @@
     </footer>
   </div>
 
-  <!-- Skrypt obsługujący slajder galerii oraz przełączanie plakatów -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      lucide.createIcons();
-
-      // Przełączanie zdjęć w galerii
-      const gallerySlides = [
-        [document.querySelector('[data-template-id="gallery-photo-1"]'), document.querySelector('[data-template-id="gallery-photo-1-alt"]')],
-        [document.querySelector('[data-template-id="gallery-photo-2"]'), document.querySelector('[data-template-id="gallery-photo-3"]')],
-        [document.querySelector('[data-template-id="gallery-photo-4"]'), document.querySelector('[data-template-id="gallery-photo-5"]')]
-      ];
-      let galleryIndex = 0;
-      setInterval(function () {
-        galleryIndex = (galleryIndex + 1) % 2;
-        gallerySlides.forEach(function (slides) {
-          slides.forEach(function (image, index) {
-            if (image) image.classList.toggle("hidden", index !== galleryIndex);
-          });
-        });
-      }, 4000);
-
-      // Podgląd i pobieranie plakatu
-      const posterImages = Array.from(document.querySelectorAll(".poster-image"));
-      const randomPosterButton = document.getElementById("random-poster-button");
-      const downloadPoster = document.getElementById("download-poster");
-      const posterStatus = document.querySelector("[data-template-id=poster-status]");
-      let activePoster = 0;
-
-      function showPoster(index) {
-        posterImages.forEach((image, imageIndex) => image.classList.toggle("hidden", imageIndex !== index));
-        activePoster = index;
-        downloadPoster.href = posterImages[index].src;
-        posterStatus.textContent = "Plakat " + (index + 1) + " z " + posterImages.length + " — gotowy do pobrania.";
-      }
-
-      randomPosterButton.addEventListener("click", function () {
-        let next = Math.floor(Math.random() * posterImages.length);
-        if (posterImages.length > 1 && next === activePoster) next = (next + 1) % posterImages.length;
-        showPoster(next);
-      });
-      showPoster(0);
-
-      // Licznik wsparcia
-      const button = document.getElementById("support-button");
-      const count = document.getElementById("support-count");
-      const feedback = document.getElementById("vote-feedback");
-      let signals = 0;
-
-      button.addEventListener("click", function () {
-        signals += 1;
-        count.textContent = signals;
-        feedback.textContent = signals === 1
-          ? "SYGNAŁ ODEBRANY. TRYB HYPER: AKTYWNY."
-          : "ENERGIA DODANA. SZKOŁA WCHODZI NA WYŻSZY POZIOM.";
-      });
-    });
-  </script>
+  <!-- Skrypt JavaScript -->
+  <script src="script.js"></script>
 </body>
 </html>
