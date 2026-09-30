@@ -1,10 +1,15 @@
-// TUTAJ WKLEJ SWÓJ ADRES DISCORD WEBHOOK:
-const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1554908216926675076/ONAetG3A1dAaxOFdqJebXGoqmk0BKC2hSUqoJYyAz6aLp6enZfUhxXwHI5tN17X1bIl2";
+// TUTAJ WKLEJ TWÓJ URL Z GOOGLE APPS SCRIPT (zamiast webhooka Discorda):
+const GAS_URL = "https://script.google.com/macros/s/AKfycbxH3hMPb60Rud30KwcajxWL8RrMwBc69_c8IZigHFY6ho9f850arq0DFvCV3R7O_DM/exec";
 
 document.addEventListener("DOMContentLoaded", function () {
+  console.log("🐛 [DEBUG]: Inicjalizacja skryptu kampanii...");
+
   // Inicjalizacja ikonek Lucide
   if (window.lucide) {
     lucide.createIcons();
+    console.log("🐛 [DEBUG]: Ikonki Lucide zainicjowane.");
+  } else {
+    console.warn("⚠️ [DEBUG]: Brak biblioteki Lucide.");
   }
 
   // Przełączanie zdjęć w galerii
@@ -71,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
- // Wysyłanie propozycji na Discord Webhook
+  // Wysyłanie propozycji przez Google Apps Script (GAS)
   const proposalForm = document.getElementById("proposal-form");
   const proposalInput = document.getElementById("proposal-input");
   const proposalFeedback = document.getElementById("proposal-feedback");
@@ -82,44 +87,59 @@ document.addEventListener("DOMContentLoaded", function () {
       e.preventDefault();
       
       const text = proposalInput.value.trim();
-      if (!text) return;
+      console.log("🐛 [DEBUG]: Próba wysłania propozycji:", text);
 
-      if (!DISCORD_WEBHOOK_URL || DISCORD_WEBHOOK_URL.includes("TWOJ_WEBHOOK_TUTAJ")) {
+      if (!text) {
+        console.warn("⚠️ [DEBUG]: Pole wiadomości jest puste.");
+        return;
+      }
+
+      if (!GAS_URL || GAS_URL.includes("TWÓJ_WYGENEROWANY_ID_Z_GAS")) {
+        console.error("❌ [DEBUG]: Brak wklejonego URL z Google Apps Script w script.js!");
         proposalFeedback.style.color = "var(--pink)";
-        proposalFeedback.textContent = "Wklej prawidłowy URL webhooka w pliku script.js!";
+        proposalFeedback.textContent = "❌ BŁĄD: Wklej prawidłowy URL z Google Apps Script w script.js!";
         return;
       }
 
       proposalSubmit.disabled = true;
       proposalFeedback.style.color = "var(--cyan)";
-      proposalFeedback.textContent = "Wysyłanie...";
+      proposalFeedback.textContent = "⏳ Wysyłanie do Discorda...";
 
-      // Wysłanie zapytania POST do Discorda z pingiem @everyone
-      fetch(DISCORD_WEBHOOK_URL, {
+      const payload = { text: text };
+      console.log("🐛 [DEBUG]: Wysyłanie pakietu danych do GAS:", payload);
+
+      // Zapytanie POST do Google Apps Script (użycie text/plain omija zapytania OPTIONS/preflight)
+      fetch(GAS_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          content: "@everyone 💡 **Nowa propozycja od ucznia!**\n> " + text,
-          allowed_mentions: {
-            parse: ["everyone"]
-          }
-        })
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8"
+        },
+        body: JSON.stringify(payload)
       })
-      .then(response => {
-        if (response.ok) {
+      .then(response => response.json())
+      .then(data => {
+        console.log("🐛 [DEBUG]: Odpowiedź z Google Apps Script:", data);
+        
+        if (data.status === "success") {
+          console.log("✅ [DEBUG]: Wiadomość pomyślnie wysłana przez GAS na Discorda!");
           proposalFeedback.style.color = "var(--lime)";
           proposalFeedback.textContent = "DZIĘKI! Twoja propozycja trafiła na nasz sztabowy kanał!";
           proposalInput.value = "";
         } else {
-          throw new Error("Błąd sieci");
+          console.error("❌ [DEBUG]: GAS zwrócił błąd:", data.message);
+          throw new Error(data.message || "Błąd przetwarzania w Google Apps Script");
         }
       })
-      .catch(error => {
+      .catch((error) => {
+        console.error("❌ [DEBUG]: Szczegóły błędu wysyłania:", error);
         proposalFeedback.style.color = "var(--pink)";
-        proposalFeedback.textContent = "Nie udało się wysłać. Spróbuj ponownie za chwilę.";
+        proposalFeedback.textContent = `❌ Błąd wysyłania: ${error.message}. Sprawdź konsolę (F12).`;
       })
       .finally(() => {
         proposalSubmit.disabled = false;
       });
     });
+  } else {
+    console.error("❌ [DEBUG]: Nie znaleziono formularza #proposal-form w HTML!");
   }
+});
