@@ -1,16 +1,949 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jakub Strybulewicz — Kandydat na Przewodniczącego</title>
+
+  <!-- Czcionki Google -->
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;family=Fraunces:opsz,wght@9..144,700;9..144,800;9..144,900&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
+
+  <!-- Skrypty zewnętrzne -->
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.577.0/dist/umd/lucide.min.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
+
+  <style>
+    :root {
+      --ink: #07070b;
+      --panel: #101018;
+      --panel-2: #171725;
+      --lime: #a6ff00;
+      --pink: #ff3c9e;
+      --cyan: #00e5ff;
+      --yellow: #ffe600;
+      --white: #f8f7ff;
+      --muted: #a7a7bc;
+      --line: #2b2b3b;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-width: 320px;
+      background: var(--ink);
+      color: var(--white);
+      font-family: "DM Sans", sans-serif;
+      overflow-x: hidden;
+    }
+
+    .noise {
+      pointer-events: none;
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      opacity: .055;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+    }
+
+    .ticker-wrap {
+      width: 100%;
+      overflow: hidden;
+      background: var(--lime);
+      color: #060806;
+      border-bottom: 3px solid #050505;
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      white-space: nowrap;
+      box-shadow: 0 5px 25px rgba(166,255,0,.28);
+    }
+
+    .ticker {
+      display: inline-block;
+      padding: 12px 0;
+      font-family: "Space Mono", monospace;
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      animation: scrollTicker 26s linear infinite;
+    }
+
+    @keyframes scrollTicker {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    .site-shell {
+      width: 100%;
+      min-height: 100%;
+      position: relative;
+      background:
+        radial-gradient(circle at 90% 11%, rgba(255, 60, 158, .14), transparent 25rem),
+        radial-gradient(circle at 8% 35%, rgba(0,229,255,.12), transparent 27rem),
+        var(--ink);
+    }
+
+    .grid-bg {
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, black, transparent 80%);
+      pointer-events: none;
+    }
+
+    .content-width {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding-left: clamp(19px, 3vw, 42px);
+      padding-right: clamp(19px, 3vw, 42px);
+    }
+
+    .header {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+      padding-top: 26px;
+      padding-bottom: 20px;
+    }
+
+    .brand-zone { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; }
+    .zdz-logo {
+      width: 132px;
+      height: 62px;
+      object-fit: contain;
+      object-position: center;
+      padding: 0;
+      background: transparent;
+      border: 0;
+    }
+    .mate-logo {
+      width: 122px;
+      height: 58px;
+      object-fit: contain;
+      padding: 0;
+    }
+
+    .date-badge {
+      border: 2px solid var(--yellow);
+      color: var(--yellow);
+      background: rgba(255,230,0,.08);
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-family: "Space Mono", monospace;
+      font-size: .76rem;
+      font-weight: 700;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      box-shadow: 0 0 22px rgba(255,230,0,.13);
+      animation: badgePulse 2.2s ease-in-out infinite;
+    }
+
+    @keyframes badgePulse {
+      50% { transform: rotate(-1deg) scale(1.03); box-shadow: 0 0 32px rgba(255,230,0,.30); }
+    }
+
+    .hero {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 54px;
+      align-items: center;
+      padding-top: 46px;
+      padding-bottom: 78px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      background: var(--pink);
+      color: white;
+      border-radius: 8px;
+      padding: 7px 12px;
+      transform: rotate(-2deg);
+      font-family: "Space Mono", monospace;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .hero-title {
+      margin: 23px 0 19px;
+      max-width: 730px;
+      font-family: "Fraunces", serif;
+      font-weight: 900;
+      text-transform: uppercase;
+      font-size: clamp(3rem, 7vw, 6.4rem);
+      line-height: .84;
+      letter-spacing: -.07em;
+    }
+
+    .hero-title .glow {
+      color: var(--lime);
+      text-shadow: 4px 4px 0 var(--pink), 0 0 35px rgba(166,255,0,.25);
+      display: block;
+    }
+
+    .hero-copy {
+      max-width: 600px;
+      color: var(--muted);
+      font-size: clamp(1rem, 2vw, 1.17rem);
+      line-height: 1.7;
+    }
+
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .stat {
+      min-width: 132px;
+      padding: 16px 17px;
+      background: rgba(16,16,24,.92);
+      border: 1px solid var(--line);
+      border-radius: 15px;
+    }
+
+    .stat-value {
+      color: var(--cyan);
+      font-family: "Fraunces", serif;
+      font-size: 1.75rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-family: "Space Mono", monospace;
+      font-size: .62rem;
+      line-height: 1.4;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      margin-top: 7px;
+    }
+
+    .photo-stage {
+      position: relative;
+      padding: 13px 13px 24px 0;
+    }
+
+    .photo-stage::before {
+      content: "KANDYDAT // NIE NPC";
+      position: absolute;
+      right: -8px;
+      top: 18px;
+      transform: rotate(90deg);
+      transform-origin: right top;
+      color: var(--pink);
+      font-family: "Space Mono", monospace;
+      font-size: .64rem;
+      font-weight: 700;
+      letter-spacing: .11em;
+    }
+
+    .candidate-card {
+      overflow: hidden;
+      position: relative;
+      border: 3px solid var(--lime);
+      border-radius: 26px;
+      background: var(--panel);
+      box-shadow: 12px 12px 0 var(--lime), 0 30px 60px rgba(0,0,0,.55);
+      transition: transform .3s ease;
+    }
+
+    .candidate-card:hover { transform: translate(-3px, -6px) rotate(1deg); }
+
+    .candidate-photo {
+      width: 100%;
+      height: 520px;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      filter: saturate(1.12) contrast(1.05);
+    }
+
+    .candidate-overlay {
+      position: absolute;
+      inset: auto 0 0;
+      padding: 48px 24px 20px;
+      background: linear-gradient(transparent, rgba(4,4,8,.96));
+    }
+
+    .overlay-name {
+      font-family: "Fraunces", serif;
+      font-weight: 900;
+      letter-spacing: -.03em;
+      font-size: 1.5rem;
+    }
+
+    .overlay-mode {
+      color: var(--lime);
+      font-family: "Space Mono", monospace;
+      font-size: .68rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-top: 4px;
+    }
+
+    .stamp {
+      position: absolute;
+      left: -28px;
+      top: -18px;
+      width: 124px;
+      height: 124px;
+      display: grid;
+      place-items: center;
+      border: 3px dashed var(--yellow);
+      color: var(--yellow);
+      border-radius: 50%;
+      background: rgba(7,7,11,.85);
+      font-family: "Space Mono", monospace;
+      font-size: .72rem;
+      font-weight: 700;
+      text-align: center;
+      line-height: 1.35;
+      transform: rotate(-15deg);
+    }
+
+    .section-head {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 60px 20px 34px;
+    }
+
+    .section-kicker {
+      color: var(--lime);
+      font-family: "Space Mono", monospace;
+      font-size: .76rem;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .section-title {
+      margin: 9px auto 0;
+      font-family: "Fraunces", serif;
+      font-size: clamp(2.55rem, 5vw, 4.8rem);
+      font-weight: 900;
+      line-height: .95;
+      text-transform: uppercase;
+      letter-spacing: -.06em;
+    }
+
+    .program-grid {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 17px;
+      padding-bottom: 80px;
+    }
+
+    .program-card {
+      position: relative;
+      overflow: hidden;
+      min-height: 234px;
+      display: flex;
+      flex-direction: column;
+      padding: 25px;
+      border: 1px solid var(--line);
+      border-radius: 19px;
+      background: linear-gradient(145deg, rgba(24,24,38,.96), rgba(14,14,22,.96));
+      transition: transform .24s ease, border-color .24s ease, box-shadow .24s ease;
+    }
+
+    .program-card:hover {
+      transform: translateY(-7px);
+      border-color: var(--lime);
+      box-shadow: 0 15px 35px rgba(166,255,0,.12);
+    }
+
+    .card-number {
+      position: absolute;
+      top: 13px;
+      right: 16px;
+      color: rgba(255,255,255,.055);
+      font-family: "Fraunces", serif;
+      font-weight: 900;
+      font-size: 4.4rem;
+      line-height: 1;
+    }
+
+    .tag {
+      position: relative;
+      z-index: 1;
+      align-self: flex-start;
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-family: "Space Mono", monospace;
+      font-size: .62rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .tag-lime { color: var(--lime); border: 1px solid var(--lime); background: rgba(166,255,0,.08); }
+    .tag-pink { color: var(--pink); border: 1px solid var(--pink); background: rgba(255,60,158,.08); }
+    .tag-cyan { color: var(--cyan); border: 1px solid var(--cyan); background: rgba(0,229,255,.08); }
+    .tag-yellow { color: var(--yellow); border: 1px solid var(--yellow); background: rgba(255,230,0,.08); }
+
+    .program-name {
+      position: relative;
+      z-index: 1;
+      margin: 21px 0 9px;
+      font-family: "Fraunces", serif;
+      font-size: 1.43rem;
+      line-height: 1.06;
+      font-weight: 800;
+    }
+
+    .program-copy { position: relative; z-index: 1; color: var(--muted); font-size: .92rem; line-height: 1.58; }
+
+    .powerline { margin-top: auto; padding-top: 21px; display: flex; align-items: center; gap: 8px; }
+    .powerline-track { height: 5px; flex: 1; overflow: hidden; background: #2a2a38; border-radius: 10px; }
+    .powerline-fill { height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--lime), var(--cyan)); }
+    .powerline-label { color: var(--muted); font-family: "Space Mono", monospace; font-size: .59rem; }
+
+    .gallery-wrap { position: relative; z-index: 2; padding-bottom: 94px; }
+    .gallery-grid { display: grid; grid-template-columns: 1.15fr .85fr .85fr; gap: 17px; }
+    .gallery-card {
+      min-height: 330px;
+      position: relative;
+      overflow: hidden;
+      border: 2px solid var(--line);
+      border-radius: 21px;
+      background: var(--panel);
+    }
+    .gallery-card:first-child { min-height: 430px; }
+    .gallery-card:hover { border-color: var(--pink); }
+    .gallery-image { width: 100%; height: 100%; position: absolute; inset: 0; object-fit: cover; transition: transform .55s ease; }
+    .gallery-card:hover .gallery-image { transform: scale(1.08); }
+    .gallery-caption {
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 14px;
+      padding: 10px 12px;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 10px;
+      background: rgba(5,5,8,.74);
+      backdrop-filter: blur(9px);
+      color: white;
+      font-family: "Space Mono", monospace;
+      font-size: .66rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .poster-section { position: relative; z-index: 2; padding-bottom: 72px; }
+    .poster-panel { max-width: 930px; margin: auto; padding: 42px 25px; text-align: center; border: 3px solid var(--cyan); border-radius: 27px; background: linear-gradient(135deg, #101d2a, #14101e); }
+    .poster-preview { max-width: 330px; height: 430px; margin: 24px auto; overflow: hidden; border: 2px solid var(--cyan); border-radius: 16px; background: #07070b; }
+    .poster-image { width: 100%; height: 100%; object-fit: cover; }
+    .poster-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 14px; }
+    .download-button { display: inline-flex; align-items: center; justify-content: center; border: 2px solid var(--lime); border-radius: 999px; padding: 14px 24px; color: var(--lime); font-family: "Space Mono", monospace; font-size: .78rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; text-decoration: none; }
+    .poster-status { min-height: 20px; margin-top: 16px; color: var(--cyan); font-family: "Space Mono", monospace; font-size: .68rem; }
+    .vote-section { position: relative; z-index: 2; padding-bottom: 96px; }
+    .vote-panel {
+      overflow: hidden;
+      position: relative;
+      max-width: 930px;
+      margin: auto;
+      text-align: center;
+      border: 3px solid var(--pink);
+      border-radius: 27px;
+      padding: clamp(34px, 6vw, 64px) 25px;
+      background: linear-gradient(135deg, #20122c, #101622);
+      box-shadow: 0 0 55px rgba(255,60,158,.2);
+    }
+    .vote-panel::after {
+      content: "VOTE VOTE VOTE VOTE";
+      position: absolute;
+      inset: auto -50px -22px;
+      color: rgba(255,255,255,.045);
+      white-space: nowrap;
+      font-family: "Fraunces", serif;
+      font-size: 5rem;
+      font-weight: 900;
+      letter-spacing: -.06em;
+      pointer-events: none;
+    }
+
+    .vote-heading {
+      position: relative;
+      z-index: 1;
+      margin: 10px 0 13px;
+      font-family: "Fraunces", serif;
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      line-height: .95;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -.05em;
+    }
+
+    .vote-copy { position: relative; z-index: 1; color: var(--muted); max-width: 570px; margin: 0 auto 26px; }
+    .vote-button {
+      position: relative;
+      z-index: 1;
+      border: 0;
+      border-radius: 999px;
+      padding: 17px 29px;
+      background: var(--lime);
+      color: #071006;
+      cursor: pointer;
+      font-family: "Space Mono", monospace;
+      font-size: .9rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      box-shadow: 0 10px 0 #5e9400, 0 17px 30px rgba(166,255,0,.28);
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+    .vote-button:hover { transform: translateY(-3px) rotate(-1deg); }
+    .vote-button:active { transform: translateY(6px); box-shadow: 0 3px 0 #5e9400; }
+    .vote-button:focus-visible { outline: 3px solid white; outline-offset: 4px; }
+    .vote-counter { position: relative; z-index: 1; margin-top: 26px; color: var(--muted); font-size: .9rem; }
+    #support-count { color: var(--yellow); font-family: "Fraunces", serif; font-size: 1.6rem; font-weight: 900; }
+    #vote-feedback { min-height: 20px; position: relative; z-index: 1; color: var(--cyan); font-family: "Space Mono", monospace; font-size: .68rem; margin-top: 7px; }
+
+    footer {
+      position: relative;
+      z-index: 2;
+      background: #040406;
+      border-top: 1px solid var(--line);
+      text-align: center;
+      padding: 42px 25px;
+    }
+
+    .footer-logo { width: 132px; height: 62px; object-fit: contain; object-position: center; border-radius: 0; border: 0; background: transparent; padding: 0; }
+    .footer-logos { display: flex; justify-content: center; align-items: center; gap: 14px; flex-wrap: wrap; }
+    .copyright { color: #9e9eaf; margin-top: 19px; font-size: .88rem; }
+    .madeby {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 7px 12px;
+      color: var(--cyan);
+      border: 1px solid #264d55;
+      border-radius: 999px;
+      background: rgba(0,229,255,.05);
+      font-family: "Space Mono", monospace;
+      font-size: .67rem;
+      font-weight: 700;
+    }
+
+    @media (max-width: 1100px) {
+      .hero { gap: 34px; }
+      .hero-title { font-size: clamp(2.8rem, 7.2vw, 5.5rem); }
+      .program-grid { gap: 14px; }
+      .program-card { padding: 21px; }
+      .gallery-grid { gap: 14px; }
+    }
+    @media (max-width: 950px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-copy { max-width: 690px; }
+      .photo-stage { max-width: 620px; margin: 0 auto; width: 100%; }
+      .program-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+      .gallery-card:first-child { grid-column: 1 / -1; min-height: 390px; }
+    }
+    @media (max-width: 780px) {
+      .header { align-items: flex-start; }
+      .candidate-photo { height: clamp(390px, 62vw, 500px); }
+      .section-head { padding-top: 48px; padding-bottom: 28px; }
+      .section-title { font-size: clamp(2.35rem, 7vw, 4rem); }
+      .vote-button, .download-button { padding: 15px 21px; }
+    }
+    @media (max-width: 620px) {
+      .header { justify-content: center; text-align: center; }
+      .brand-zone { justify-content: center; }
+      .hero { padding-top: 26px; padding-bottom: 58px; gap: 31px; }
+      .hero-title { font-size: clamp(2.55rem, 14vw, 4.3rem); line-height: .88; }
+      .hero-copy { font-size: 1rem; line-height: 1.58; }
+      .candidate-photo { height: 420px; }
+      .photo-stage { padding-right: 8px; }
+      .stamp { left: -10px; width: 98px; height: 98px; font-size: .6rem; }
+      .poster-panel, .vote-panel { padding-left: 18px; padding-right: 18px; }
+      .poster-preview { height: min(430px, 118vw); }
+      .vote-heading { font-size: clamp(2rem, 10vw, 3.2rem); }
+      .stats { display: grid; grid-template-columns: 1fr 1fr; }
+      .stat:last-child { grid-column: 1 / -1; }
+      .program-grid, .gallery-grid { grid-template-columns: 1fr; }
+      .gallery-card:first-child { grid-column: auto; min-height: 340px; }
+      .gallery-card { min-height: 280px; }
+      .program-card { min-height: 215px; }
+    }
+  </style>
 </head>
- <div style="position: relative; width: 100%; height: 0; padding-top: 100.0000%;
- padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
- border-radius: 8px; will-change: transform;">
-  <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
-    src="https://www.canva.com/design/DAHWqRkCBuM/ane8JTon6ac_1txoEO63Jg/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
-  </iframe>
-</div>
-<a href="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAHWqRkCBuM&#x2F;ane8JTon6ac_1txoEO63Jg&#x2F;view?utm_content=DAHWqRkCBuM&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener">Strona kandydata Jakuba Strybulewicza – kopia</a>
-</HTML>
+<body data-template-id="__page-root">
+  <div class="noise"></div>
+  <div class="site-shell">
+    <div class="grid-bg"></div>
+
+    <!-- Pasek informacyjny (Ticker) -->
+    <div data-template-id="campaign-ticker" class="canva-banner ticker-wrap">
+      <div class="ticker">
+        ⚡ JAKUB STRYBULEWICZ ★ WYBORY SU 2026/2027 ★ GŁOSOWANIE: 8 PAŹDZIERNIKA ★ KLIMATYZACJA W KLASACH ★ OBIADY (JAK SIĘ UDA) ★ ROAST DAY ★ SZKOŁA, KTÓRA NIE ŚPI ★ ⚡ JAKUB STRYBULEWICZ ★ WYBORY SU 2026/2027 ★ GŁOSOWANIE: 8 PAŹDZIERNIKA ★ KLIMATYZACJA W KLASACH ★ OBIADY (JAK SIĘ UDA) ★ ROAST DAY ★ SZKOŁA, KTÓRA NIE ŚPI ★
+      </div>
+    </div>
+
+    <!-- Nagłówek i logotypy -->
+    <header class="content-width header">
+      <div class="brand-zone">
+        <!-- Logo ZDZ w nagłówku -->
+        <img src="sciezka/logo-zdz.png" alt="Logo ZDZ" data-template-id="zdz-logo" class="canva-image zdz-logo" loading="lazy">
+        
+        <!-- Logo Mate w nagłówku -->
+        <img src="sciezka/logo-mate.png" alt="Logo Mate" data-template-id="mate-logo" class="canva-image mate-logo" loading="lazy">
+      </div>
+      <div data-template-id="vote-date" class="canva-tag date-badge">Głosowanie: 08.10</div>
+    </header>
+    <main>
+      <!-- Sekcja Hero z główną prezentacją kandydata -->
+      <section class="content-width hero" aria-labelledby="hero-name">
+        <div>
+          <div data-template-id="hero-eyebrow" class="canva-tag eyebrow">
+            <i data-lucide="zap" style="width:15px;height:15px"></i>
+            <span data-template-id="hero-eyebrow-text" class="canva-text">Kandydat na Przewodniczącego</span>
+          </div>
+          <h1 id="hero-name" data-template-id="hero-title" class="canva-text hero-title">
+            Jakub <span class="glow">Strybulewicz</span>
+          </h1>
+          <p data-template-id="hero-copy" class="canva-text hero-copy">
+            Czas na prawdziwe zmiany w szkole! Twój głos tworzy energię na cały rok szkolny.
+          </p>
+
+          <div class="stats" aria-label="Najważniejsze informacje kampanii">
+            <div class="stat">
+              <div class="stat-value">08.10</div>
+              <div data-template-id="stat-date-label" class="canva-text stat-label">Dzień wyborów</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">13</div>
+              <div data-template-id="stat-program-label" class="canva-text stat-label">Punktów programu</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">∞</div>
+              <div data-template-id="stat-energy-label" class="canva-text stat-label">Poziom energii</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="photo-stage">
+          <div class="stamp">
+            100%<br>TRYB<br>HYPER
+          </div>
+          <article class="candidate-card">
+            <!-- Główna fotografia kandydata (Jakub Strybulewicz) -->
+            <img src="sciezka/glowne-zdjecie-kandydata-jakub-strybulewicz.jpg" alt="Główne zdjęcie kandydata - Jakub Strybulewicz" data-template-id="candidate-main-photo" class="canva-image candidate-photo" loading="lazy">
+            <div class="candidate-overlay">
+              <div data-template-id="candidate-name-overlay" class="canva-text overlay-name">Jakub Strybulewicz</div>
+              <div data-template-id="candidate-mode" class="canva-text overlay-mode">Tryb Aktywny // Gotowy do Działania</div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Nagłówek sekcji programu -->
+      <section class="section-head" aria-labelledby="program-heading">
+        <p data-template-id="program-kicker" class="canva-text section-kicker">Program Wyborczy</p>
+        <h2 id="program-heading" data-template-id="program-heading" class="canva-text section-title">13 Konkretnych Zmian</h2>
+      </section>
+
+      <!-- Grid z kartami programu -->
+      <section class="content-width program-grid" aria-label="Program wyborczy">
+        <article class="program-card">
+          <span class="card-number">01</span>
+          <span data-template-id="tag-1" class="canva-tag tag tag-cyan">Komfort</span>
+          <h3 data-template-id="program-1-title" class="canva-text program-name">Klimatyzacja w Klasach</h3>
+          <p data-template-id="program-1-copy" class="canva-text program-copy">Montaż klimatyzacji w najbardziej nasłonecznionych salach lekcyjnych.</p>
+          <div class="powerline">
+            <div class="powerline-track"><div class="powerline-fill" style="width:87%"></div></div>
+            <span class="powerline-label">87%</span>
+          </div>
+        </article>
+
+        <article class="program-card">
+          <span class="card-number">02</span>
+          <span data-template-id="tag-2" class="canva-tag tag tag-lime">Jedzenie</span>
+          <h3 data-template-id="program-2-title" class="canva-text program-name">Obiady w Szkołach</h3>
+          <p data-template-id="program-2-copy" class="canva-text program-copy">Wprowadzenie pełnowartościowych posiłków i ciepłych obiadów dla każdego.</p>
+          <div class="powerline">
+            <div class="powerline-track"><div class="powerline-fill" style="width:96%"></div></div>
+            <span class="powerline-label">96%</span>
+          </div>
+        </article>
+
+        <article class="program-card">
+          <span class="card-number">03</span>
+          <span data-template-id="tag-3" class="canva-tag tag tag-pink">Rozrywka</span>
+          <h3 data-template-id="program-3-title" class="canva-text program-name">Szkolny Roast Day</h3>
+          <p data-template-id="program-3-copy" class="canva-text program-copy">Dzień z dystansem – coroczny szkolny roast ze wspólną zabawą.</p>
+          <div class="powerline">
+            <div class="powerline-track"><div class="powerline-fill" style="width:92%"></div></div>
+            <span class="powerline-label">92%</span>
+          </div>
+        </article>
+
+        <article class="program-card">
+          <span class="card-number">04</span>
+          <span data-template-id="tag-4" class="canva-tag tag tag-yellow">Relaks</span>
+          <h3 data-template-id="program-4-title" class="canva-text program-name">Strefa Chilla</h3>
+          <p data-template-id="program-4-copy" class="canva-text program-copy">Nowoczesne pufy, kanapy i stacje do ładowania telefonów na korytarzach.</p>
+          <div class="powerline">
+            <div class="powerline-track"><div class="powerline-fill" style="width:89%"></div></div>
+            <span class="powerline-label">89%</span>
+          </div>
+        </article>
+
+        <article class="program-card">
+          <span class="card-number">05</span>
+          <span data-template-id="tag-5" class="canva-tag tag tag-cyan">Muzyka</span>
+          <h3 data-template-id="program-5-title" class="canva-text program-name">Muzyka na Przerwach</h3>
+          <p data-template-id="program-5-copy" class="canva-text program-copy">Głosowanie na playlisty puszczane przez węzeł radiowy podczas długich przerw.</p>
+          <div class="powerline">
+            <div class="powerline-track"><div class="powerline-fill" style="width:100%"></div></div>
+            <span class="powerline-label">100%</span>
+          </div>
+        </article>
+
+        <article class="program-card">
+          <span class="card-number">06</span>
+          <span data-template-id="tag-6" class="canva-tag tag tag-lime">Sport</span>
+          <h3 data-template-id="program-6-title" class="canva-text program-name">Turnieje E-Sportowe</h3>
+          <p data-template-id="program-6-copy" class="canva-text program-copy">Organizacja profesjonalnych turniejów w gierki komputerowe z nagrodami.</p>
+          <div class="powerline">
+            <div class="powerline-track"><div class="powerline-fill" style="width:94%"></div></div>
+            <span class="powerline-label">94%</span>
+          </div>
+        </article>
+
+        <article class="program-card">
+          <span class="card-number">07</span>
+          <span data-template-id="tag-7" class="canva-tag tag tag-pink">Tradycja</span>
+          <h3 data-template-id="program-7-title" class="canva-text program-name">No Backpack Day</h3>
+          <p data-template-id="program-7-copy" class="canva-text program-copy">Cykliczne dni tematyczne, w tym dzień bez plecaka z nagrodami za kreatywność.</p>
+          <div class="powerline">
+            <div class="powerline-track"><div class="powerline-fill" style="width:50%"></div></div>
+            <span class="powerline-label">49.9%</span>
+          </div>
+        </article>
+
+        <article class="program-card">
+          <span class="card-number">08</span>
+          <span data-template-id="tag-8" class="canva-tag tag tag-cyan">Edukacja</span>
+          <h3 data-template-id="program-8-title" class="canva-text program-name">Dni Bez Pytań</h3>
+          <p data-template-id="program-8-copy" class="canva-text program-copy">Szczęśliwy numerek oraz dodatkowe przywileje po wydarzeniach szkolnych.</p>
+          <div class="powerline">
+            <div class="powerline-track"><div class="powerline-fill" style="width:95%"></div></div>
+            <span class="powerline-label">95%</span>
+          </div>
+        </article>
+
+        <article class="program-card">
+          <span class="card-number">09</span>
+          <span data-template-id="tag-9" class="canva-tag tag tag-lime">Inicjatywa</span>
+          <h3 data-template-id="program-9-title" class="canva-text program-name">Budżet Uczniowski</h3>
+          <p data-template-id="program-9-copy" class="canva-text program-copy">Oddzielny budżet na pomysły zgłaszane bezpośrednio przez uczniów.</p>
+          <div class="powerline">
+            <div class="powerline-track"><div class="powerline-fill" style="width:81%"></div></div>
+            <span class="powerline-label">81%</span>
+          </div>
+        </article>
+
+        <article class="program-card">
+          <span class="card-number">10</span>
+          <span data-template-id="tag-10" class="canva-tag tag tag-pink">Społeczność</span>
+          <h3 data-template-id="program-10-title" class="canva-text program-name">Szkolne Merge &amp; Gadżety</h3>
+          <p data-template-id="program-10-copy" class="canva-text program-copy">Bluzy, koszulki i vlepki z unikalnym motywem naszej społeczności.</p>
+          <div class="powerline">
+            <div class="powerline-track"><div class="powerline-fill" style="width:88%"></div></div>
+            <span class="powerline-label">88%</span>
+          </div>
+        </article>
+
+        <article class="program-card">
+          <span class="card-number">11</span>
+          <span data-template-id="tag-11" class="canva-tag tag tag-yellow">Ekologia</span>
+          <h3 data-template-id="program-11-title" class="canva-text program-name">Poidełka z Wodą</h3>
+          <p data-template-id="program-11-copy" class="canva-text program-copy">Darmowa, czysta woda pitna dostępna na każdym piętrze budynku.</p>
+          <div class="powerline">
+            <div class="powerline-track"><div class="powerline-fill" style="width:93%"></div></div>
+            <span class="powerline-label">93%</span>
+          </div>
+        </article>
+
+        <article class="program-card">
+          <span class="card-number">12</span>
+          <span data-template-id="tag-12" class="canva-tag tag tag-lime">Wydarzenia</span>
+          <h3 data-template-id="program-12-title" class="canva-text program-name">Kino Plenerowe</h3>
+          <p data-template-id="program-12-copy" class="canva-text program-copy">Szkolne wieczory filmowe na świeżym powietrzu lub w hali sportowej.</p>
+          <div class="powerline">
+            <div class="powerline-track"><div class="powerline-fill" style="width:97%"></div></div>
+            <span class="powerline-label">97%</span>
+          </div>
+        </article>
+
+        <article class="program-card">
+          <span class="card-number">13</span>
+          <span data-template-id="tag-13" class="canva-tag tag tag-pink">Przyszłość</span>
+          <h3 data-template-id="program-13-title" class="canva-text program-name">Otwarty Samorząd</h3>
+          <p data-template-id="program-13-copy" class="canva-text program-copy">Regularne konsultacje i skrzynka zgłoszeniowa dostępna online dla każdego.</p>
+          <div class="powerline">
+            <div class="powerline-track"><div class="powerline-fill" style="width:99%"></div></div>
+            <span class="powerline-label">99%</span>
+          </div>
+        </article>
+      </section>
+
+      <!-- Sekcja Galerii -->
+      <section class="section-head" aria-labelledby="gallery-heading">
+        <p data-template-id="gallery-kicker" class="canva-text section-kicker">Kadr z Kampanii</p>
+        <h2 id="gallery-heading" data-template-id="gallery-heading" class="canva-text section-title">Galeria W Akcji</h2>
+      </section>
+
+      <section class="content-width gallery-wrap" aria-label="Galeria kampanijna">
+        <div class="gallery-grid">
+          <figure class="gallery-card">
+            <!-- Zdjęcie 1 w galerii (główne i alt w slajderze) -->
+            <img src="sciezka/galeria-zdjecie-1.jpg" alt="Zdjęcie z wydarzenia kampanijnego 1" data-template-id="gallery-photo-1" class="canva-image gallery-image" loading="lazy">
+            <img src="sciezka/galeria-zdjecie-1-alt.jpg" alt="Zdjęcie z wydarzenia kampanijnego 1 (alternatywne)" data-template-id="gallery-photo-1-alt" class="canva-image gallery-image hidden" loading="lazy">
+            <figcaption data-template-id="gallery-caption-1" class="canva-text gallery-caption">Spotkania na korytarzu</figcaption>
+          </figure>
+
+          <figure class="gallery-card">
+            <!-- Zdjęcie 2 w galerii -->
+            <img src="sciezka/galeria-zdjecie-2.jpg" alt="Zdjęcie z wydarzenia kampanijnego 2" data-template-id="gallery-photo-2" class="canva-image gallery-image" loading="lazy">
+            <!-- Zdjęcie 3 w galerii (alt w slajderze) -->
+            <img src="sciezka/galeria-zdjecie-3.jpg" alt="Zdjęcie z wydarzenia kampanijnego 3" data-template-id="gallery-photo-3" class="canva-image gallery-image hidden" loading="lazy">
+            <figcaption data-template-id="gallery-caption-2" class="canva-text gallery-caption">Przygotowania plakatu</figcaption>
+          </figure>
+
+          <figure class="gallery-card">
+            <!-- Zdjęcie 4 w galerii -->
+            <img src="sciezka/galeria-zdjecie-4.jpg" alt="Zdjęcie z wydarzenia kampanijnego 4" data-template-id="gallery-photo-4" class="canva-image gallery-image" loading="lazy">
+            <!-- Zdjęcie 5 w galerii (alt w slajderze) -->
+            <img src="sciezka/galeria-zdjecie-5.jpg" alt="Zdjęcie z wydarzenia kampanijnego 5" data-template-id="gallery-photo-5" class="canva-image gallery-image hidden" loading="lazy">
+            <figcaption data-template-id="gallery-caption-4" class="canva-text gallery-caption">Zespół wsparcia</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- Sekcja z plakatami do pobrania -->
+      <section class="content-width poster-section" aria-labelledby="poster-heading">
+        <div class="poster-panel">
+          <p data-template-id="poster-kicker" class="canva-text section-kicker">Pobierz i Udostępnij</p>
+          <h2 id="poster-heading" data-template-id="poster-heading" class="canva-text section-title">Plakat Kampanijny</h2>
+          
+          <div class="poster-preview">
+            <!-- Warianty plakatów wyborczych -->
+            <img src="sciezka/plakat-kampanijny-1.jpg" alt="Plakat kampanijny - Wariant 1" data-template-id="poster-image-1" class="canva-image poster-image" loading="lazy">
+            <img src="sciezka/plakat-kampanijny-2.jpg" alt="Plakat kampanijny - Wariant 2" data-template-id="poster-image-2" class="canva-image poster-image hidden" loading="lazy">
+            <img src="sciezka/plakat-kampanijny-3.jpg" alt="Plakat kampanijny - Wariant 3" data-template-id="poster-image-3" class="canva-image poster-image hidden" loading="lazy">
+            <img src="sciezka/plakat-kampanijny-4.jpg" alt="Plakat kampanijny - Wariant 4" data-template-id="poster-image-4" class="canva-image poster-image hidden" loading="lazy">
+          </div>
+
+          <div class="poster-actions">
+            <button id="random-poster-button" data-template-id="random-poster-button" class="canva-button vote-button" type="button">Losuj Plakat</button>
+            <a id="download-poster" data-template-id="download-poster" class="canva-button download-button" download="plakat-kampanijny.jpg">Pobierz Plakat</a>
+          </div>
+          <p data-template-id="poster-status" class="canva-text poster-status" aria-live="polite"></p>
+        </div>
+      </section>
+
+      <!-- Sekcja oddawania głosu / poparcia -->
+      <section class="content-width vote-section" aria-labelledby="vote-heading">
+        <div class="vote-panel">
+          <p data-template-id="vote-kicker" class="canva-text section-kicker">Twój Głos Ma Znaczenie</p>
+          <h2 id="vote-heading" data-template-id="vote-heading" class="canva-text vote-heading">Daj Sygnał Poparcia</h2>
+          <p data-template-id="vote-copy" class="canva-text vote-copy">Kliknij przycisk poniżej, aby dodać swoją energię do kampanii i pokazać wsparcie!</p>
+          <button id="support-button" data-template-id="support-button" class="canva-button vote-button" type="button">Popieram Jakuba!</button>
+          
+          <p class="vote-counter"><span id="support-count">0</span> sygnałów energii kampanii</p>
+          <p id="vote-feedback" aria-live="polite"></p>
+        </div>
+      </section>
+    </main>
+
+    <!-- Stopka -->
+    <footer>
+      <div class="footer-logos">
+        <!-- Logo Mate w stopce -->
+        <img src="sciezka/logo-mate.png" alt="Logo Mate w stopce" data-template-id="footer-mate-logo" class="canva-image footer-logo" loading="lazy">
+        
+        <!-- Logo ZDZ w stopce -->
+        <img src="sciezka/logo-zdz.png" alt="Logo ZDZ w stopce" data-template-id="footer-zdz-logo" class="canva-image footer-logo" loading="lazy">
+      </div>
+      <p data-template-id="copyright-text" class="canva-text copyright">© 2026 Kampania Wyborcza Jakub Strybulewicz. Wszelkie prawa zastrzeżone.</p>
+      <p data-template-id="madeby-text" class="canva-text madeby">Strona Kampanii Wyborczej SU</p>
+    </footer>
+  </div>
+
+  <!-- Skrypt obsługujący slajder galerii oraz przełączanie plakatów -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      lucide.createIcons();
+
+      // Przełączanie zdjęć w galerii
+      const gallerySlides = [
+        [document.querySelector('[data-template-id="gallery-photo-1"]'), document.querySelector('[data-template-id="gallery-photo-1-alt"]')],
+        [document.querySelector('[data-template-id="gallery-photo-2"]'), document.querySelector('[data-template-id="gallery-photo-3"]')],
+        [document.querySelector('[data-template-id="gallery-photo-4"]'), document.querySelector('[data-template-id="gallery-photo-5"]')]
+      ];
+      let galleryIndex = 0;
+      setInterval(function () {
+        galleryIndex = (galleryIndex + 1) % 2;
+        gallerySlides.forEach(function (slides) {
+          slides.forEach(function (image, index) {
+            if (image) image.classList.toggle("hidden", index !== galleryIndex);
+          });
+        });
+      }, 4000);
+
+      // Podgląd i pobieranie plakatu
+      const posterImages = Array.from(document.querySelectorAll(".poster-image"));
+      const randomPosterButton = document.getElementById("random-poster-button");
+      const downloadPoster = document.getElementById("download-poster");
+      const posterStatus = document.querySelector("[data-template-id=poster-status]");
+      let activePoster = 0;
+
+      function showPoster(index) {
+        posterImages.forEach((image, imageIndex) => image.classList.toggle("hidden", imageIndex !== index));
+        activePoster = index;
+        downloadPoster.href = posterImages[index].src;
+        posterStatus.textContent = "Plakat " + (index + 1) + " z " + posterImages.length + " — gotowy do pobrania.";
+      }
+
+      randomPosterButton.addEventListener("click", function () {
+        let next = Math.floor(Math.random() * posterImages.length);
+        if (posterImages.length > 1 && next === activePoster) next = (next + 1) % posterImages.length;
+        showPoster(next);
+      });
+      showPoster(0);
+
+      // Licznik wsparcia
+      const button = document.getElementById("support-button");
+      const count = document.getElementById("support-count");
+      const feedback = document.getElementById("vote-feedback");
+      let signals = 0;
+
+      button.addEventListener("click", function () {
+        signals += 1;
+        count.textContent = signals;
+        feedback.textContent = signals === 1
+          ? "SYGNAŁ ODEBRANY. TRYB HYPER: AKTYWNY."
+          : "ENERGIA DODANA. SZKOŁA WCHODZI NA WYŻSZY POZIOM.";
+      });
+    });
+  </script>
+</body>
+</html>
