@@ -118,7 +118,7 @@ document.addEventListener("DOMContentLoaded", function () {
       })
       .catch((error) => {
         proposalFeedback.style.color = "var(--pink)";
-        proposalFeedback.textContent = `❌ Błąd wysyłania: ${error.message}`;
+        proposalFeedback.textContent = `❌ Błąd wysyłania!: ${error.message}`;
       })
       .finally(() => {
         proposalSubmit.disabled = false;
