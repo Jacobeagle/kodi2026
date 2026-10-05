@@ -38,9 +38,8 @@
       </div>
       <div data-template-id="vote-date" class="canva-tag date-badge">Głosowanie: 08.10</div>
     </header>
-
     <main>
-      <!-- Sekcja Hero -->
+      <!-- Sekcja Hero z główną prezentacją kandydata -->
       <section class="content-width hero" aria-labelledby="hero-name">
         <div>
           <div data-template-id="hero-eyebrow" class="canva-tag eyebrow">
@@ -75,6 +74,7 @@
             100%<br>TRYB<br>HYPER
           </div>
           <article class="candidate-card">
+            <!-- Główna fotografia kandydata (Jakub Strybulewicz) -->
             <img src="cwel.jpg" alt="Główne zdjęcie kandydata - Jakub Strybulewicz" data-template-id="candidate-main-photo" class="canva-image candidate-photo">
             <div class="candidate-overlay">
               <div data-template-id="candidate-name-overlay" class="canva-text overlay-name">Jakub Strybulewicz</div>
@@ -84,37 +84,33 @@
         </div>
       </section>
 
-      <!-- Sekcja Wideo (Naprawiona responsywność iframe) -->
-      <section class="content-width video-section" aria-labelledby="video-heading">
-        <div class="section-head">
-          <p data-template-id="program-kicker-spot" class="canva-text section-kicker">Reklama kandydata</p>
-          <h2 id="video-heading" data-template-id="program-heading-spot" class="canva-text section-title">Spot Wyborczy</h2>
-        </div>
+       <!-- Nagłówek sekcji programu -->
+      <section class="section-head" aria-labelledby="program-heading-1">
+        <p data-template-id="program-kicker" class="canva-text section-kicker">Reklama kandydata</p>
+        <h2 id="program-heading-1" data-template-id="program-heading" class="canva-text section-title"></h2>
       
-        <div class="video-container">
-          <iframe 
-  src="https://www.youtube-nocookie.com/embed/xyg6ADaAyVQ" 
-  title="Spot Wyborczy"
-  frameborder="0"
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-  referrerpolicy="strict-origin-when-cross-origin"
-  allowfullscreen>
-</iframe>
-        </div>
+        <article class="program-card">
+          <span class="card-number">YT</span>
+          <span data-template-id="tag-7" class="canva-tag tag tag-lime">Jedzenie</span>
+          <h3 data-template-id="program-7-title" class="canva-text program-name">Reklama</h3>
+          <iframe width="895" height="503" src="https://www.youtube.com/embed/xyg6ADaAyVQ" title="JAKUB STRYBULEWICZ – Czas na zmiany! Oficjalny Spot Wyborczy ZDZ #KODI2026" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </article>
       </section>
 
-      <!-- Sekcja Nowe Pomysły -->
-      <section class="section-head" aria-labelledby="new-ideas-heading">
-        <p data-template-id="program-kicker-new" class="canva-text section-kicker">Program Wyborczy</p>
-        <h2 id="new-ideas-heading" data-template-id="program-heading-new" class="canva-text section-title">Nowe Pomysły!</h2>
+
+       <!-- Nagłówek sekcji programu -->
+      <section class="section-head" aria-labelledby="program-heading-1">
+        <p data-template-id="program-kicker" class="canva-text section-kicker">Program Wyborczy</p>
+        <h2 id="program-heading-1" data-template-id="program-heading" class="canva-text section-title">Nowe Pomysły!</h2>
       </section>
 
+      <!-- Grid z nowymi punktami programu -->
       <section class="content-width program-grid" aria-label="Program wyborczy - nowe pomysły">
         <article class="program-card">
           <span class="card-number">01</span>
-          <span data-template-id="tag-vlog" class="canva-tag tag tag-cyan">VLOG</span>
-          <h3 data-template-id="program-vlog-title" class="canva-text program-name">Vlog z życia szkoły</h3>
-          <p data-template-id="program-vlog-copy" class="canva-text program-copy">Jeden dzień, w którym będzie stworzony pełny vlog z życia szkoły!</p>
+          <span data-template-id="tag-1" class="canva-tag tag tag-cyan">VLOG</span>
+          <h3 data-template-id="program-1-title" class="canva-text program-name">Vlog z życia szkoły</h3>
+          <p data-template-id="program-1-copy" class="canva-text program-copy">Jeden dzień, w którym będzie stworzony pełny vlog z życia szkoły!</p>
           <div class="powerline">
             <div class="powerline-track"><div class="powerline-fill" style="width:67%"></div></div>
             <span class="powerline-label">67%</span>
@@ -122,12 +118,13 @@
         </article>
       </section>
 
-      <!-- Sekcja 13 Konkretnych Zmian -->
-      <section class="section-head" aria-labelledby="program-heading-main">
-        <p data-template-id="program-kicker-main" class="canva-text section-kicker">Konkretny Program</p>
-        <h2 id="program-heading-main" data-template-id="program-heading-main-title" class="canva-text section-title">13 Konkretnych Zmian</h2>
+      <!-- Nagłówek sekcji programu -->
+      <section class="section-head" aria-labelledby="program-heading-2">
+        <p data-template-id="program-kicker-2" class="canva-text section-kicker"></p>
+        <h2 id="program-heading-2" data-template-id="program-heading-2" class="canva-text section-title">13 Konkretnych Zmian</h2>
       </section>
 
+      <!-- Grid z kartami programu -->
       <section class="content-width program-grid" aria-label="Program wyborczy - 13 zmian">
         <article class="program-card">
           <span class="card-number">01</span>
@@ -273,7 +270,7 @@
         </article>
       </section>
 
-      <!-- Formularz zgłaszania propozycji -->
+      <!-- NOWA SEKCJA: Formularz wysyłania propozycji -->
       <section class="content-width proposal-section" aria-labelledby="proposal-heading">
         <div class="proposal-panel">
           <p class="canva-text section-kicker">Masz Swój Pomysł?</p>
@@ -298,38 +295,44 @@
       <section class="content-width gallery-wrap" aria-label="Galeria kampanijna">
         <div class="gallery-grid">
           <figure class="gallery-card">
+            <!-- Zdjęcie 1 w galerii (główne i alt w slajderze) -->
             <img src="cwel.jpg" alt="Zdjęcie z wydarzenia kampanijnego 1" data-template-id="gallery-photo-1" class="canva-image gallery-image" loading="lazy">
             <img src="z5.JPG" alt="Zdjęcie z wydarzenia kampanijnego 1 (alternatywne)" data-template-id="gallery-photo-1-alt" class="canva-image gallery-image hidden" loading="lazy">
           </figure>
 
           <figure class="gallery-card">
+            <!-- Zdjęcie 2 w galerii -->
             <img src="z1.jpg" alt="Zdjęcie z wydarzenia kampanijnego 2" data-template-id="gallery-photo-2" class="canva-image gallery-image" loading="lazy">
+            <!-- Zdjęcie 3 w galerii (alt w slajderze) -->
             <img src="z2.jpg" alt="Zdjęcie z wydarzenia kampanijnego 3" data-template-id="gallery-photo-3" class="canva-image gallery-image hidden" loading="lazy">
           </figure>
 
           <figure class="gallery-card">
+            <!-- Zdjęcie 4 w galerii -->
             <img src="z4.jpg" alt="Zdjęcie z wydarzenia kampanijnego 4" data-template-id="gallery-photo-4" class="canva-image gallery-image" loading="lazy">
+            <!-- Zdjęcie 5 w galerii (alt w slajderze) -->
             <img src="z3.jpg" alt="Zdjęcie z wydarzenia kampanijnego 5" data-template-id="gallery-photo-5" class="canva-image gallery-image hidden" loading="lazy">
           </figure>
         </div>
       </section>
 
-      <!-- Sekcja Plakatów -->
+      <!-- Sekcja z plakatami do pobrania -->
       <section class="content-width poster-section" aria-labelledby="poster-heading">
         <div class="poster-panel">
           <p data-template-id="poster-kicker" class="canva-text section-kicker">Pobierz i Udostępnij</p>
           <h2 id="poster-heading" data-template-id="poster-heading" class="canva-text section-title">Plakat Kampanijny</h2>
           
           <div class="poster-preview">
+            <!-- Warianty plakatów wyborczych -->
             <img src="p1.png" alt="Plakat kampanijny - Wariant 1" data-template-id="poster-image-1" class="canva-image poster-image" loading="lazy">
             <img src="p2.jpg" alt="Plakat kampanijny - Wariant 2" data-template-id="poster-image-2" class="canva-image poster-image hidden" loading="lazy">
             <img src="p3.jpg" alt="Plakat kampanijny - Wariant 3" data-template-id="poster-image-3" class="canva-image poster-image hidden" loading="lazy">
             <img src="p4.png" alt="Plakat kampanijny - Wariant 4" data-template-id="poster-image-4" class="canva-image poster-image hidden" loading="lazy">
-            <img src="p5.png" alt="Plakat kampanijny - Wariant 5" data-template-id="poster-image-5" class="canva-image poster-image hidden" loading="lazy">
-            <img src="p6.png" alt="Plakat kampanijny - Wariant 6" data-template-id="poster-image-6" class="canva-image poster-image hidden" loading="lazy">
-            <img src="p7.png" alt="Plakat kampanijny - Wariant 7" data-template-id="poster-image-7" class="canva-image poster-image hidden" loading="lazy">
-            <img src="p8.png" alt="Plakat kampanijny - Wariant 8" data-template-id="poster-image-8" class="canva-image poster-image hidden" loading="lazy">
-            <img src="p9.png" alt="Plakat kampanijny - Wariant 9" data-template-id="poster-image-9" class="canva-image poster-image hidden" loading="lazy">
+            <img src="p5.png" alt="Plakat kampanijny - Wariant 5" data-template-id="poster-image-4" class="canva-image poster-image hidden" loading="lazy">
+            <img src="p6.png" alt="Plakat kampanijny - Wariant 6" data-template-id="poster-image-4" class="canva-image poster-image hidden" loading="lazy">
+            <img src="p7.png" alt="Plakat kampanijny - Wariant 7" data-template-id="poster-image-4" class="canva-image poster-image hidden" loading="lazy">
+            <img src="p8.png" alt="Plakat kampanijny - Wariant 8" data-template-id="poster-image-4" class="canva-image poster-image hidden" loading="lazy">
+            <img src="p9.png" alt="Plakat kampanijny - Wariant 9" data-template-id="poster-image-4" class="canva-image poster-image hidden" loading="lazy">
           </div>
 
           <div class="poster-actions">
@@ -340,7 +343,7 @@
         </div>
       </section>
 
-      <!-- Sekcja Poparcia -->
+      <!-- Sekcja oddawania głosu / poparcia -->
       <section class="content-width vote-section" aria-labelledby="vote-heading">
         <div class="vote-panel">
           <p data-template-id="vote-kicker" class="canva-text section-kicker">Twój Głos Ma Znaczenie</p>
@@ -357,7 +360,10 @@
     <!-- Stopka -->
     <footer>
       <div class="footer-logos">
+        <!-- Logo Mate w stopce -->
         <img src="mate.png" alt="Logo Mate w stopce" data-template-id="footer-mate-logo" class="canva-image footer-logo" loading="lazy">
+        
+        <!-- Logo ZDZ w stopce -->
         <img src="zdz.png" alt="Logo ZDZ w stopce" data-template-id="footer-zdz-logo" class="canva-image footer-logo" loading="lazy">
       </div>
       <p data-template-id="copyright-text" class="canva-text copyright">© 2026 Kampania Wyborcza Jakub Strybulewicz. Wszelkie prawa zastrzeżone.</p>

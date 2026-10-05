@@ -1,4 +1,4 @@
-// URL Google Apps Script
+// TUTAJ WKLEJ TWÓJ URL Z GOOGLE APPS SCRIPT (zamiast webhooka Discorda):
 const GAS_URL = "https://script.google.com/macros/s/AKfycbxH3hMPb60Rud30KwcajxWL8RrMwBc69_c8IZigHFY6ho9f850arq0DFvCV3R7O_DM/exec";
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -7,6 +7,9 @@ document.addEventListener("DOMContentLoaded", function () {
   // Inicjalizacja ikonek Lucide
   if (window.lucide) {
     lucide.createIcons();
+    console.log("🐛 [DEBUG]: Ikonki Lucide zainicjowane.");
+  } else {
+    console.warn("⚠️ [DEBUG]: Brak biblioteki Lucide.");
   }
 
   // Przełączanie zdjęć w galerii
@@ -73,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Wysyłanie propozycji do Google Apps Script
+  // Wysyłanie propozycji przez Google Apps Script (GAS)
   const proposalForm = document.getElementById("proposal-form");
   const proposalInput = document.getElementById("proposal-input");
   const proposalFeedback = document.getElementById("proposal-feedback");
@@ -84,21 +87,28 @@ document.addEventListener("DOMContentLoaded", function () {
       e.preventDefault();
       
       const text = proposalInput.value.trim();
+      console.log("🐛 [DEBUG]: Próba wysłania propozycji:", text);
 
-      if (!text) return;
+      if (!text) {
+        console.warn("⚠️ [DEBUG]: Pole wiadomości jest puste.");
+        return;
+      }
 
-      if (!GAS_URL) {
+      if (!GAS_URL || GAS_URL.includes("TWÓJ_WYGENEROWANY_ID_Z_GAS")) {
+        console.error("❌ [DEBUG]: Brak wklejonego URL z Google Apps Script w script.js!");
         proposalFeedback.style.color = "var(--pink)";
-        proposalFeedback.textContent = "❌ BŁĄD: Brak adresu URL usługi Google Apps Script!";
+        proposalFeedback.textContent = "❌ BŁĄD: Wklej prawidłowy URL z Google Apps Script w script.js!";
         return;
       }
 
       proposalSubmit.disabled = true;
       proposalFeedback.style.color = "var(--cyan)";
-      proposalFeedback.textContent = "⏳ Wysyłanie...";
+      proposalFeedback.textContent = "⏳ Wysyłanie do Discorda...";
 
       const payload = { text: text };
+      console.log("🐛 [DEBUG]: Wysyłanie pakietu danych do GAS:", payload);
 
+      // Zapytanie POST do Google Apps Script (użycie text/plain omija zapytania OPTIONS/preflight)
       fetch(GAS_URL, {
         method: "POST",
         headers: {
@@ -108,21 +118,28 @@ document.addEventListener("DOMContentLoaded", function () {
       })
       .then(response => response.json())
       .then(data => {
+        console.log("🐛 [DEBUG]: Odpowiedź z Google Apps Script:", data);
+        
         if (data.status === "success") {
+          console.log("✅ [DEBUG]: Wiadomość pomyślnie wysłana przez GAS na Discorda!");
           proposalFeedback.style.color = "var(--lime)";
-          proposalFeedback.textContent = "DZIĘKI! Twoja propozycja trafiła do mojego sztabu!";
+          proposalFeedback.textContent = "DZIĘKI! Twoja propozycja trafiła na nasz sztabowy kanał!";
           proposalInput.value = "";
         } else {
-          throw new Error(data.message || "Błąd przetwarzania");
+          console.error("❌ [DEBUG]: GAS zwrócił błąd:", data.message);
+          throw new Error(data.message || "Błąd przetwarzania w Google Apps Script");
         }
       })
       .catch((error) => {
+        console.error("❌ [DEBUG]: Szczegóły błędu wysyłania:", error);
         proposalFeedback.style.color = "var(--pink)";
-        proposalFeedback.textContent = `❌ Błąd wysyłania: ${error.message}`;
+        proposalFeedback.textContent = `❌ Błąd wysyłania: ${error.message}. Sprawdź konsolę (F12).`;
       })
       .finally(() => {
         proposalSubmit.disabled = false;
       });
     });
+  } else {
+    console.error("❌ [DEBUG]: Nie znaleziono formularza #proposal-form w HTML!");
   }
 });
